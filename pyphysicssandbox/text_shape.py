@@ -8,16 +8,20 @@ from .base_shape import BaseShape
 
 class Text(Box):
     def __init__(self, space, x, y, caption, font_name, font_size, mass, static, cosmetic=False):
-        self.font = pygame.font.SysFont(font_name, font_size)
+        if not pygame.font.get_init():
+            print("😬")
+            pygame.font.init()
+
+        self.font = pygame.font.Font(font_name, font_size)
         width, height = self.font.size(caption)
-        height -= self.font.get_ascent()
+        height = self.font.get_height()*.6
 
         self.caption = caption
         self.space = space
         self.static = static
 
-        box_x = x + width / 2
-        box_y = y + height / 2
+        box_x = x + width/2
+        box_y = y + height/2
         self._x = box_x
         self._y = box_y
 

@@ -39,6 +39,7 @@ __all__ = ['window', 'add_observer', 'gravity', 'resistance', 'mouse_clicked',
 
 
 pygame.init()
+print("pygame init: 👾")
 
 space = pymunk.Space()
 space.gravity = (0.0, 500.0)
@@ -535,9 +536,9 @@ def _text(p, caption, mass, static, cosmetic=False):
     from .text_shape import Text
 
     if mass == -1:
-        mass = 10 * len(caption)
+        mass = 5 * len(caption)
 
-    result = Text(space, p[0], p[1], caption, "Arial", 12, mass, static, cosmetic)
+    result = Text(space, p[0], p[1], caption, "Diploe-Semibold.otf", 100, mass*2, static, cosmetic)
     result.color = default_color
     shapes[result.collision_type] = result
 
@@ -1010,12 +1011,14 @@ def run(do_physics=True):
             shape.draw(screen)
 
         if do_physics:
-            space.step(1 / 50.0)
+            space.step(1 / 50)
 
         pygame.display.flip()
-        clock.tick(50)
+        clock.tick(25)
+        #clock.tick(50)
 
     pygame.quit()
+    print("pygame quit: 🤯")
 
 
 def draw():
