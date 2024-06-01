@@ -6,7 +6,7 @@ import math
 from .base_shape import BaseShape
 
 
-class Box(BaseShape):
+class TextBox(BaseShape):
     def __init__(self, space, x, y, width, height, radius, mass, static, cosmetic=False):
 
         if not cosmetic:

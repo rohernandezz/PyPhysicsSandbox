@@ -8,9 +8,10 @@ from .base_shape import BaseShape
 
 class Text(Box):
     def __init__(self, space, x, y, caption, font_name, font_size, mass, static, cosmetic=False):
-        if not pygame.font.get_init():
-            print("😬")
-            pygame.font.init()
+       # 4 running inside drawbot, but this is hacky and that causes other problems anyway
+       # if not pygame.font.get_init():
+       #     print("😬")
+       #     pygame.font.init()
 
         self.font = pygame.font.Font(font_name, font_size)
         width, height = self.font.size(caption)

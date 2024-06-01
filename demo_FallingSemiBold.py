@@ -1,24 +1,22 @@
 """
-A traditional Hello World example for PyPhysicsSandbox.  A screencast showing the development
-of this example can be found at: https://www.youtube.com/watch?v=xux3z2unaME
+Demo 2 :: Falling lines of text
 """
 
 from pyphysicssandbox import *
 
 w,h = 1050, 1350
 floorH = 100
-wallW=1
+wallW=10
 fricT=.5
 
-window('Hello World', w, h)
+window('Hello World', w, h, fps=30)
 resistance(.55)
 
 left_wall= static_box((0,0), wallW, h)
-left_wall.color = "blue"
 left_wall.elasticity=0.2
 
 floor = static_box((0, h-floorH), w, floorH)
-floor.color = Color('white')
+floor.color = Color('White')
 floor.elasticity=1.2
 
 caption = text((50, 30), 'Hello World!')
@@ -51,12 +49,13 @@ caption4.friction=fricT
 # boxxa.elasticity=.75
 
 # boxxy = box((100, 100),523, 112)
-# boxxy.elasticity=.25
+# boxxy.elasticity=.75
 
 # boxx = box((125, 320),523, 112)
 # boxx.elasticity=.55
 
 # boxxx = box((355, 420),523, 112)
-# boxxx.elasticity=.55
+# boxxx.elasticity=.9
 
 run()
+#draw()

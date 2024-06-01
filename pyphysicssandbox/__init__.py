@@ -1,3 +1,7 @@
+#drawBot_on = False
+drawBot_on = True
+drawBot_save_format = "mp4"
+
 """
 pyPhysicsSandbox is a simple wrapper around Pymunk that makes it easy to write code to explore physics simulations.
 It's intended for use in introductory programming classrooms.
@@ -13,6 +17,7 @@ visible in the simulation and can slow the simulation down if the number of shap
 
 """
 
+import drawBot
 import pygame
 import pymunk
 import math
@@ -39,15 +44,19 @@ __all__ = ['window', 'add_observer', 'gravity', 'resistance', 'mouse_clicked',
 
 
 pygame.init()
-print("pygame init: 👾")
+print("pygame init: 👾✅")
+
+drawBot.newDrawing()
+print("drawbot initialized a new drawing: 🎨✅")
 
 space = pymunk.Space()
 space.gravity = (0.0, 500.0)
 space.damping = 0.95
 
 win_title = "Untitled"
-win_width = 500
-win_height = 500
+frames_x_second = 30
+win_width = 1000
+win_height = 1000
 x_margin = win_width
 y_margin = win_height
 observers = []
@@ -57,7 +66,7 @@ default_color = Color('black')
 shapes = {}
 
 
-def window(title, width, height):
+def window(title, width, height, fps=frames_x_second):
     """Sets the caption, width, and height of the window that will
     appear when run () is executed.
 
@@ -68,18 +77,22 @@ def window(title, width, height):
     :param height: the height of the window in pixels
     :type height: int
 
+    :param fps: fractions of 1 second to move the simulation forward (aka FPS in drawBot🎨)
+    :type fps: int
     """
     global win_title
     global win_width
     global win_height
     global x_margin
     global y_margin
+    global frames_x_second 
 
     win_title = title
     win_width = width
     win_height = height
     x_margin = win_width
-    y_margin = win_height
+    y_margin = win_height   
+    frames_x_second = fps
 
 
 def add_observer(hook):
@@ -538,7 +551,7 @@ def _text(p, caption, mass, static, cosmetic=False):
     if mass == -1:
         mass = 5 * len(caption)
 
-    result = Text(space, p[0], p[1], caption, "Diploe-Semibold.otf", 100, mass*2, static, cosmetic)
+    result = Text(space, p[0], p[1], caption, "./Fonts/Diploe-Semibold.otf", 100, mass*2, static, cosmetic)
     result.color = default_color
     shapes[result.collision_type] = result
 
@@ -944,7 +957,12 @@ def run(do_physics=True):
     global clicked
 
     _calc_margins()
+    
+    #########
+    #canvas is for 🎨 DrawBot: ………… somethingBot.canvas = drawBot. 👈🏼 Maybe some canvas object should handle drawBot abstractions like screen does pyGame, but LATER
+    #########    
 
+    #screen is for 👾 pyGame:
     screen = pygame.display.set_mode((win_width, win_height))
     pygame.display.set_caption(win_title)
     clock = pygame.time.Clock()
@@ -967,7 +985,15 @@ def run(do_physics=True):
         for observer in observers:
             observer(keys)
 
+
+    #### Setup a new frame to draw on:
+        ####👾 pyGame:
         screen.fill((255, 255, 255))
+
+        ###🎨 DrawBot:
+        drawBot.newPage(win_width, win_height)
+        drawBot.frameDuration(1/frames_x_second)
+    #/#/#/#/
 
         # Should automatically remove any shapes that are
         # far enough below the bottom edge of the window
@@ -1011,14 +1037,23 @@ def run(do_physics=True):
             shape.draw(screen)
 
         if do_physics:
-            space.step(1 / 50)
+            space.step(1 / frames_x_second) # simulation step forward time in fractions of a second (aka FPS?🤔) 
 
+        ####👾 pygame:
         pygame.display.flip()
-        clock.tick(25)
-        #clock.tick(50)
+        clock.tick(frames_x_second)
 
+    ###🎨 DrawBot:
+    if drawBot_on:
+        print("drawBot Render on: 💃🏻")
+        drawBot.saveImage(f"~/Desktop/{win_title}_drawBotOutput.{drawBot_save_format}")
+
+    drawBot.endDrawing()
+    print("drawBot end Drawing: 🎨⛔️")
+
+    ####👾 pygame:
     pygame.quit()
-    print("pygame quit: 🤯")
+    print("pygame quit: 👾⛔️")
 
 
 def draw():
