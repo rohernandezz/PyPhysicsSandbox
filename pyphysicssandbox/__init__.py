@@ -38,7 +38,7 @@ __all__ = ['window', 'add_observer', 'gravity', 'resistance', 'mouse_clicked',
            'color',
            #START CUSTOMIZATION:
            "rgb_to_normalized", #COLOR
-           "textBox"
+           "textBox", "textBox_with_font"
            ]
 
 ########### FUNCTUIONS!!!!!
@@ -100,8 +100,8 @@ win_width = 1000
 win_height = 1000
 x_margin = win_width  # simulation boundaries x
 y_margin = win_height # simulation boundaries y
-default_font_path = "./Fonts/Diploe-Semibold.otf"
-default_font_size = 100
+default_font_path = "fonts/Comic Sans MS.ttf"
+default_font_size = 85
 
 
 ### 2. Starts the pygame instance
@@ -123,7 +123,8 @@ db_canvas_h = 1000
 
 ####Animation:
 frames_x_second = 30
-simulation_render_time = 6 #👈🏼 in seconds
+time_multiplier = 1
+simulation_render_time = 5 #👈🏼 in seconds
 # time steadyness somehow (do sine waves, etc) 
 
 
@@ -644,10 +645,53 @@ def textBox(p, width, height, caption, mass=-1):
 
     return _textBox(p, width, height, caption, -1, False)
 
-
-    
-
 def _textBox(p, width, height, caption, mass, static, cosmetic=False):
+    from .textbox_shape import TextBox
+
+    if mass == -1:
+        mass = width * height * 1.2 ## I imagine a text is somewhat more heavier than a non text box? 🤔
+    # Polygons expect x,y to be the center point
+    x = p[0] + width / 2
+    y = p[1] + height / 2
+    result = TextBox(space, x, y, width, height, caption, default_font_path, default_font_size, mass, static, cosmetic)
+    result.color = default_color
+    shapes[result.collision_type] = result
+
+    return result
+
+
+#####TEXTBOX
+
+#####TEXTBOX WITH FONT
+#####👇🏼👇🏼👇🏼👇🏼TEXTBOX WITH FONT
+
+
+def textBox_with_font(p, width, height, caption, font_path, font_size, mass=-1):
+    """Creates a text rectangle that reacts to gravity, using
+    Arial 12 point font.
+
+    :param p: The upper left corner of the text rectangle
+    :type p: (int, int)
+    :param width: The width of the box
+    :type width: int
+    :param height: The height of the box
+    :type height: int
+    :param caption: The text to display
+    :type caption: string
+    :param font_path: The filepath of font to use
+    :type font_path: string
+    :param font_size: The point size of font
+    :type font_size: int
+    :param mass: The mass of the shape (defaults to 1)
+    :type mass: int
+    :rtype: shape
+
+    """
+
+    return _textBox_with_font(p, width, height, caption, font_path, font_size, -1, False)
+
+
+def _textBox_with_font(p, width, height, caption, font_path, font_size, mass, static, cosmetic=False):
 
     from .textbox_shape import TextBox
 
@@ -658,13 +702,14 @@ def _textBox(p, width, height, caption, mass, static, cosmetic=False):
     x = p[0] + width / 2
     y = p[1] + height / 2
 
-    result = TextBox(space, x, y, width, height, caption, default_font_path, default_font_size, mass, static, cosmetic)
+    result = TextBox(space, x, y, width, height, caption, font_path, font_size, mass, static, cosmetic)
     result.color = default_color
     shapes[result.collision_type] = result
 
     return result
 
-#####TEXTBOX
+#####TEXTBOX WITH FONT
+#####TEXTBOX WITH FONT
 
 
 
@@ -1154,7 +1199,7 @@ def run(do_physics=True):
             shape.draw(screen)
 
         if do_physics:
-            space.step(1 / frames_x_second) # simulation step forward time in fractions of a second (aka FPS?🤔) 
+            space.step( 1 / frames_x_second * time_multiplier ) # simulation step forward time in fractions of a second (aka FPS?🤔) 
 
         ####👾 pygame:
         pygame.display.flip()

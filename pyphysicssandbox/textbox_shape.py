@@ -8,7 +8,7 @@ from .base_shape import BaseShape
 
 
 class TextBox(Box):
-    def __init__(self, space, x, y, width, height,caption, font_path, font_size, mass, static, cosmetic=False):
+    def __init__(self, space, x, y, width, height, caption, font_path, font_size, mass, static, cosmetic=False):
 
         self.width =  width
         self.height = height
@@ -56,7 +56,7 @@ class TextBox(Box):
         screen.blit(rotated, (self.position.x-(size.width/2), self.position.y-(size.height/2)))
 
         ##👾drawBot:
-        label_fs = drawBot.FormattedString()
+        label_fs = drawBot.FormattedString(align='center')
         label_fs.font(self.font_path)
         label_fs.fontSize(self.font_size)
         label_fs.fill(*self.db_color)

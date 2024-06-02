@@ -6,8 +6,8 @@ myText = "How to hijack frames from drawbot rect letters and numbers: 0987654321
 
 def add_counter_and_make_fs(string):
     f = db.FormattedString()
-    f.font("Helvetica")
-    f.lineHeight(89)
+    f.font("fonts/Comic Sans MS")
+    f.lineHeight(8)
     f.fontSize(100)
     for i, c in enumerate(myText):      
         f += c
@@ -19,7 +19,7 @@ fs_w_counter = add_counter_and_make_fs(myText)
 text_box = (50, 10, 900, 800)
 
 ####
-w,h = 1050, 1350
+w,h = 1000, 1000
 floorH = 100
 wallW=10
 fricT=.5
@@ -44,7 +44,7 @@ letter_rect_prev = [0,0,0,0]
 for i, bounds in enumerate(db.textBoxCharacterBounds(fs_w_counter, text_box)):
     db.fill(random(), random(), random(), .5)
     x, y, w, h = bounds.bounds 
-    #rect(x, y, w, h)  
+    db.rect(x, y, w, h)  
     path = db.BezierPath()            
     label = str(bounds.formattedSubString)
     path.text(bounds.formattedSubString)
@@ -60,7 +60,7 @@ for i, bounds in enumerate(db.textBoxCharacterBounds(fs_w_counter, text_box)):
             db.rect(minx, miny, maxx-minx, maxy-miny)
         
         letter_rect = [minx+add_X, miny+add_Y, maxx-minx, maxy-miny]    
-        startCoord = (letter_rect[0],letter_rect[1]-1000)
+        startCoord = (letter_rect[0],letter_rect[1])
         db.rect(*letter_rect)
         startCoord_prev = startCoord
         my_shapes.append(textBox((letter_rect[0], 1000-letter_rect[1]),letter_rect[2], letter_rect[3],label))
