@@ -1,7 +1,3 @@
-#drawBot_on = False
-drawBot_on = True
-drawBot_save_format = "mp4"
-
 """
 pyPhysicsSandbox is a simple wrapper around Pymunk that makes it easy to write code to explore physics simulations.
 It's intended for use in introductory programming classrooms.
@@ -39,31 +35,99 @@ __all__ = ['window', 'add_observer', 'gravity', 'resistance', 'mouse_clicked',
            'add_collision', 'slip_motor', 'set_margins', 'cosmetic_box',
            'cosmetic_rounded_box', 'cosmetic_ball', 'cosmetic_line',
            'cosmetic_polygon', 'cosmetic_triangle', 'spring',
-           'color'
+           'color',
+           #START CUSTOMIZATION:
+           "rgb_to_normalized", #COLOR
+           "textBox"
            ]
 
+########### FUNCTUIONS!!!!!
+def rgb_to_normalized(r, g, b, a):
+    """
+    Convert RGB values from 0-255 range to 0-1 range.
+    
+    Parameters:
+    r (int): Red value (0-255)
+    g (int): Green value (0-255)
+    b (int): Blue value (0-255)
+    
+    Returns:
+    tuple: Normalized RGB values in the range 0-1
+    """
+    return r / 255, g / 255, b / 255, a / 255
 
-pygame.init()
-print("pygame init: 👾✅")
 
-drawBot.newDrawing()
-print("drawbot initialized a new drawing: 🎨✅")
+def normalized_to_rgb(r, g, b, a):
+    """
+    Convert RGB values from 0-255 range to 0-1 range.
+    
+    Parameters:
+    r (int): Red value (0-1)
+    g (int): Green value (0-1)
+    b (int): Blue value (0-1)
+    
+    Returns:
+    tuple: RGB values in the range 0-255
+    """
+    return r * 255, g * 255, b * 255, a * 255
 
+###########
+
+
+
+
+
+
+
+##👉🏼START THE SIMULATION THING
+##-------- SHOULD I START AN OBJECT HERE LATER???????
+## DEFFAULT SETTINGS GO HERE:
+
+### 1. Starts the pymunk space and sets physics defaults:
 space = pymunk.Space()
-space.gravity = (0.0, 500.0)
-space.damping = 0.95
-
-win_title = "Untitled"
-frames_x_second = 30
-win_width = 1000
-win_height = 1000
-x_margin = win_width
-y_margin = win_height
+space.gravity = (0.0, 500.0) #DEFAULT GRAVITY
+space.damping = 0.95         #DEFAULT RESISTANCE
+#### Simulation Behaviours:
 observers = []
 clicked = False
+#### Simulation Shapes:
+shapes = {}
+
+
+#### General Settings:
+win_title = "Untitled"
+win_width = 1000
+win_height = 1000
+x_margin = win_width  # simulation boundaries x
+y_margin = win_height # simulation boundaries y
+default_font_path = "./Fonts/Diploe-Semibold.otf"
+default_font_size = 100
+
+
+### 2. Starts the pygame instance
+pygame.init()
+#print("pygame init: 👾✅")
 default_color = Color('black')
 
-shapes = {}
+### 3. Starts a drawBot drawing:
+print("drawbot initialized a new drawing: 🎨✅")
+db_default_color = rgb_to_normalized(*default_color)
+
+### RENDER CONFIGURATIONS:
+drawBot_on = True
+drawBot_save_format = "mp4"
+drawBot_saveFolder  = "~/Desktop/"
+
+db_canvas_w = 1000 
+db_canvas_h = 1000
+
+####Animation:
+frames_x_second = 30
+simulation_render_time = 6 #👈🏼 in seconds
+# time steadyness somehow (do sine waves, etc) 
+
+
+
 
 
 def window(title, width, height, fps=frames_x_second):
@@ -549,13 +613,63 @@ def _text(p, caption, mass, static, cosmetic=False):
     from .text_shape import Text
 
     if mass == -1:
-        mass = 5 * len(caption)
+        mass = 10 * len(caption)
 
-    result = Text(space, p[0], p[1], caption, "./Fonts/Diploe-Semibold.otf", 100, mass*2, static, cosmetic)
+    # 👀👇🏼 text sends x,y as top ¿left? corner because its width is calculated inside the text object
+    result = Text(space, p[0], p[1], caption, default_font_path, default_font_size, mass, static, cosmetic)
     result.color = default_color
     shapes[result.collision_type] = result
 
     return result
+
+#####TEXTBOX
+
+def textBox(p, width, height, caption, mass=-1):
+    """Creates a text rectangle that reacts to gravity, using
+    Arial 12 point font.
+
+    :param p: The upper left corner of the text rectangle
+    :type p: (int, int)
+    :param width: The width of the box
+    :type width: int
+    :param height: The height of the box
+    :type height: int
+    :param caption: The text to display
+    :type caption: string
+    :param mass: The mass of the shape (defaults to 1)
+    :type mass: int
+    :rtype: shape
+
+    """
+
+    return _textBox(p, width, height, caption, -1, False)
+
+
+    
+
+def _textBox(p, width, height, caption, mass, static, cosmetic=False):
+
+    from .textbox_shape import TextBox
+
+    if mass == -1:
+        mass = width * height * 1.2 ## I imagine a text is somewhat more heavier than a non text box? 🤔
+
+    # Polygons expect x,y to be the center point
+    x = p[0] + width / 2
+    y = p[1] + height / 2
+
+    result = TextBox(space, x, y, width, height, caption, default_font_path, default_font_size, mass, static, cosmetic)
+    result.color = default_color
+    shapes[result.collision_type] = result
+
+    return result
+
+#####TEXTBOX
+
+
+
+
+
 
 
 def static_text_with_font(p, caption, font, size):
@@ -961,12 +1075,16 @@ def run(do_physics=True):
     #########
     #canvas is for 🎨 DrawBot: ………… somethingBot.canvas = drawBot. 👈🏼 Maybe some canvas object should handle drawBot abstractions like screen does pyGame, but LATER
     #########    
+    drawBot.newDrawing()
+
 
     #screen is for 👾 pyGame:
     screen = pygame.display.set_mode((win_width, win_height))
     pygame.display.set_caption(win_title)
     clock = pygame.time.Clock()
     running = True
+    frame_count = 0
+    max_frames = simulation_render_time * frames_x_second
 
     while running:
         keys = []
@@ -984,7 +1102,6 @@ def run(do_physics=True):
 
         for observer in observers:
             observer(keys)
-
 
     #### Setup a new frame to draw on:
         ####👾 pyGame:
@@ -1041,19 +1158,30 @@ def run(do_physics=True):
 
         ####👾 pygame:
         pygame.display.flip()
-        clock.tick(frames_x_second)
+        clock.tick(1/frames_x_second*1000)#👈🏼 pygame.clock is in milliseconds so it's 1/frames_x_second * 1000
+
+        frame_count += 1
+        print(f"frame_count:{frame_count}")
+
+        if frame_count >= max_frames:
+            running = False
+
+    ####👾 pygame:
+    pygame.quit()   
+    #print("pygame quit: 👾⛔️")
 
     ###🎨 DrawBot:
     if drawBot_on:
-        print("drawBot Render on: 💃🏻")
-        drawBot.saveImage(f"~/Desktop/{win_title}_drawBotOutput.{drawBot_save_format}")
+        print(f"💃🏻 drawBot Render ON 💃🏻")
+        
+        save_path = f"{drawBot_saveFolder}{win_title}_drawBotOutput.{drawBot_save_format}"
+        drawBot.saveImage(save_path)
+        print(f"Saved drawBot drawing to: {save_path}")
+    else:
+        print(" 🎺 NOT drawBot RENDERING 🎺 ")
 
     drawBot.endDrawing()
     print("drawBot end Drawing: 🎨⛔️")
-
-    ####👾 pygame:
-    pygame.quit()
-    print("pygame quit: 👾⛔️")
 
 
 def draw():

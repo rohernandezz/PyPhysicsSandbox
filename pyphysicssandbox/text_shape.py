@@ -1,30 +1,31 @@
 import pygame
 import pymunk
-import math
+#import math
 
 from .box_shape import Box
 from .base_shape import BaseShape
 
 
 class Text(Box):
-    def __init__(self, space, x, y, caption, font_name, font_size, mass, static, cosmetic=False):
-       # 4 running inside drawbot, but this is hacky and that causes other problems anyway
-       # if not pygame.font.get_init():
-       #     print("😬")
-       #     pygame.font.init()
+    def __init__(self, space, x, y, caption, font_path, font_size, mass, static, cosmetic=False):
 
-        self.font = pygame.font.Font(font_name, font_size)
+        self.font = pygame.font.Font(font_path, font_size)
+        self.font_path = font_path
+        self.font_size = font_size
+        #print(self.db_font)
         width, height = self.font.size(caption)
         height = self.font.get_height()*.6
 
         self.caption = caption
-        self.space = space
-        self.static = static
+        self.space = space #simulation space
+        self.static = static 
 
+        # Polygons expect x,y to be the center point
         box_x = x + width/2
         box_y = y + height/2
         self._x = box_x
         self._y = box_y
+    
 
         super().__init__(space, box_x, box_y, width, height, 3, mass, static, cosmetic)
 

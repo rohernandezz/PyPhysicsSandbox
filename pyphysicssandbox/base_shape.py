@@ -8,6 +8,7 @@ from pyphysicssandbox import win_height
 from pyphysicssandbox import space
 from pyphysicssandbox import add_observer
 
+from pyphysicssandbox import rgb_to_normalized
 
 class BaseShape:
     next_collision_type = 0
@@ -25,13 +26,16 @@ class BaseShape:
 
         self.elasticity = 0.90
         self.friction = 0.6
-        self._color = pygame.Color('black')
+        self._color = pygame.Color('blue')
         self._wrap_x = False
         self._wrap_y = False
         self._active = True
         self._visible = True
         self._debug = False
         self.custom_velocity_func = False
+
+        #drawBot
+        self._db_color = rgb_to_normalized(*self._color)
 
         BaseShape.next_collision_type += 1
         self._collision_type = BaseShape.next_collision_type
@@ -309,8 +313,19 @@ class BaseShape:
     def color(self, value):
         if type(value) == pygame.Color:
             self._color = value
+            self._db_color = rgb_to_normalized(*self._color)
         else:
             print("Color value must be a Color instance")
+
+####DB COLOR SHIT
+    @property
+    def db_color(self):
+        return self._db_color
+
+    @db_color.setter
+    def db_color(self, value):
+        self._db_color = value
+####/DB COLOR SHIT
 
     @property
     def group(self):

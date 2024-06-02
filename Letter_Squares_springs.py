@@ -19,26 +19,28 @@ fs_w_counter = add_counter_and_make_fs(myText)
 text_box = (50, 10, 900, 800)
 
 ####
-w,h = 1050, 1350
+win_width, win_height  = 1050, 1350
 floorH = 100
 wallW=10
 fricT=.5
 
 gravity(-1,500)
 
-window('Hello World', w, h, fps=30)
+window('Hello World', win_width, win_height, fps=30)
 resistance(.55)
 
-left_wall= static_box((0,0), wallW, h)
+left_wall= static_box((0,0), wallW, win_height)
 left_wall.elasticity=0.2
 
-floor = static_box((0, h-floorH), w, floorH)
+floor = static_box((0, win_height-floorH), win_width, floorH)
 floor.color = Color('Red')
 floor.elasticity= 1.5
 ####
 
 my_shapes = {}
 
+
+print(f"🤖 {win_height}")
 for i, bounds in enumerate(db.textBoxCharacterBounds(fs_w_counter, text_box)):
     db.fill(random(), random(), random(), .5)
     x, y, w, h = bounds.bounds 
@@ -58,7 +60,6 @@ for i, bounds in enumerate(db.textBoxCharacterBounds(fs_w_counter, text_box)):
         
         letter_rect = (minx+add_X, miny+add_Y, maxx-minx, maxy-miny)    
         db.rect(*letter_rect)
-
         my_shapes[i]= ((letter_rect[0],letter_rect[1]), text((letter_rect[0], letter_rect[1]),"Prueba de gusano de letras conectadas"[i]))
         my_shapes[i][1].elasticity=.9
 

@@ -24,7 +24,7 @@ boxxa = box((180, 0),523, 112)
 boxxa.elasticity=.75
 
 
-for 
+for
 
 
 

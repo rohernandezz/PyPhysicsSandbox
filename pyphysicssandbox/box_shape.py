@@ -34,7 +34,6 @@ class Box(BaseShape):
         if self._cosmetic:
             x = self._x-self.width/2
             y = self._y-self.height/2
-
             ps = [(x, y), (x+self.width, y), (x+self.width, y+self.height), (x,y+self.height), (x, y)]
         else:
             ps = [self.body.local_to_world(v) for v in self.shape.get_vertices()]
@@ -45,11 +44,11 @@ class Box(BaseShape):
         ###🎨 DrawBot:
         this_polygon = []
         for i in ps:
-            this_polygon.append((i[0],1350-i[1]))
+            this_polygon.append((i[0],1000-i[1]))
         #print(this_polygon)
 
         with drawBot.savedState():
-            drawBot.fill(1,0,0)
+            drawBot.fill(*self.db_color)
             drawBot.polygon(*this_polygon)#,close=False)
 
         ####👾 pygame:
