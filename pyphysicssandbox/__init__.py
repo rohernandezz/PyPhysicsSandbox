@@ -114,7 +114,7 @@ print("drawbot initialized a new drawing: 🎨✅")
 db_default_color = rgb_to_normalized(*default_color)
 
 ### RENDER CONFIGURATIONS:
-drawBot_on = True
+drawBot_on = False
 drawBot_save_format = "mp4"
 drawBot_saveFolder  = "~/Desktop/"
 
