@@ -124,7 +124,7 @@ db_canvas_h = 1000
 ####Animation:
 frames_x_second = 30
 time_multiplier = 1
-simulation_render_time = 5 #👈🏼 in seconds
+simulation_render_time = 15 #👈🏼 in seconds
 print_frame_count = False
 # time steadyness somehow (do sine waves, etc) 
 
