@@ -16,13 +16,23 @@ class TextBox(Box):
         self.font = pygame.font.Font(font_path, font_size)
         self.font_path = font_path
         self.font_size = font_size
+        self.label_fs = False
 
         #👇🏼DONT care about the textSize cause it'll be a drawBot textBox, and if it doesn't fit, drawBot will handle
         #👇🏼.....write smth to handle better preview *LATER*
         #width, height = self.font.size(caption) 
         #print(self.font.size(caption))#SIZE OF TEXT DRAWING CALCULATED BY PYGAME 
 
-        self.caption = caption #the text string
+        if type(caption) == str: 
+            print("IZ STRING")
+            self.caption = caption
+        else: # Write elif to check if it actually is a formattedString 😬
+             print("noString: IZ (hopefully) drawBot.FormattedString")
+             self.caption = str(caption)
+             self.label_fs = caption
+             #the text string
+
+
         self.space = space #simulation space
         self.static = static 
 
@@ -50,17 +60,20 @@ class TextBox(Box):
         ##👾pygame:
         #Draw rect lines
         pygame.draw.lines(screen, self.color, False, ps, self.radius)
-        #Draw pygame kktext
+        #Draw pygame text
         rotated = pygame.transform.rotate(self.label, degrees)
         size = rotated.get_rect()
         screen.blit(rotated, (self.position.x-(size.width/2), self.position.y-(size.height/2)))
 
         ##👾drawBot:
-        label_fs = drawBot.FormattedString(align='center')
-        label_fs.font(self.font_path)
-        label_fs.fontSize(self.font_size)
-        label_fs.fill(*self.db_color)
-        label_fs.append(self.caption)
+        if self.label_fs:
+            this_label_fs = self.label_fs
+        else:
+            this_label_fs = drawBot.FormattedString(align='center')
+            this_label_fs.font(self.font_path)
+            this_label_fs.fontSize(self.font_size)
+            this_label_fs.fill(*self.db_color)
+            this_label_fs.append(self.caption)
 
         with drawBot.savedState():
             drawBot.rotate(degrees, center=(self.x, 1000-self.y)) #NEEEDS CONMVEDRTING TO drawbotY👈🏼
@@ -72,8 +85,10 @@ class TextBox(Box):
                 shifted_y = 1000-self.position.y # FIX THIS HARCODED 1350
                 db_text_rect= (self.position.x,shifted_y,self.width,self.height)
                 drawBot.rect(*db_text_rect)
-            drawBot.fill(0)
-            drawBot.textBox(label_fs,db_text_rect)
+            
+            #drawBot.fill(None)
+            #drawBot.stroke(None)
+            drawBot.textBox(this_label_fs,db_text_rect)
 
     def __repr__(self):
         prefix = 'box'

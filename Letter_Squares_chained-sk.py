@@ -7,7 +7,7 @@ myText = "How to hijack frames from drawbot rect letters and numbers: 0987654321
 def add_counter_and_make_fs(string):
     f = db.FormattedString()
     f.font("fonts/Comic Sans MS")
-    f.lineHeight(8)
+    f.lineHeight(.8)
     f.fontSize(100)
     for i, c in enumerate(myText):      
         f += c

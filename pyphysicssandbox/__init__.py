@@ -125,6 +125,7 @@ db_canvas_h = 1000
 frames_x_second = 30
 time_multiplier = 1
 simulation_render_time = 5 #👈🏼 in seconds
+print_frame_count = False
 # time steadyness somehow (do sine waves, etc) 
 
 
@@ -1206,7 +1207,8 @@ def run(do_physics=True):
         clock.tick(1/frames_x_second*1000)#👈🏼 pygame.clock is in milliseconds so it's 1/frames_x_second * 1000
 
         frame_count += 1
-        print(f"frame_count:{frame_count}")
+        if print_frame_count:
+            print(f"frame_count:{frame_count}")
 
         if frame_count >= max_frames:
             running = False

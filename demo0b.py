@@ -1,7 +1,7 @@
 """
 Demo 1 :: Falling Rectangles and type in drawBot
 """
-
+import drawBot
 from pyphysicssandbox import *
 
 win_width = 1000
@@ -25,8 +25,16 @@ floor.color = Color("#FF000000")  #pygame color for live visualization (<-in pyg
 floor._db_color = (.9,0,.2)       #drawBot color for rendering. <-in Db notation)
 floor.elasticity = 1.1
 
+
+my_fs = drawBot.FormattedString()
+my_fs.font("fonts/VF/DiploeVF.ttf")
+my_fs.fontVariations(wght=100,wdth=800)
+my_fs.fill(1,0,0)
+my_fs.fontSize(100)
+my_fs.append("this box")
+
 #boxxa = box((180, 0),523, 112)  #
-boxxa = textBox_with_font((80, 500),523,113,"this box", "fonts/Diploe-Medium.otf", 100 )
+boxxa = textBox((80, 500),523,113,my_fs)
 boxxa.elasticity=1
 
 boxxy = textBox_with_font((100, 600),523, 112, "was made for", "fonts/DiploeNarrow-Black.otf", 100 )
@@ -43,5 +51,5 @@ boxxx = textBox_with_font((355, 920),523, 112, "and that's wat it'll do", "fonts
 boxxx.elasticity=1
 boxxx.db_color=(0.2,0,.5)
 
-run()
+run(False)
 
