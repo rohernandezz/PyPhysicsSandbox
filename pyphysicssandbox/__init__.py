@@ -38,7 +38,7 @@ __all__ = ['window', 'add_observer', 'gravity', 'resistance', 'mouse_clicked',
            'color',
            #START CUSTOMIZATION:
            "rgb_to_normalized", #COLOR
-           "textBox", "textBox_with_font"
+           "textBox", "textBox_with_font",
            ]
 
 ########### FUNCTUIONS!!!!!
@@ -103,6 +103,12 @@ y_margin = win_height # simulation boundaries y
 default_font_path = "fonts/Comic Sans MS.ttf"
 default_font_size = 85
 
+# general_settings = {
+#                      "win_title"  : win_title,
+#                      "win_width"  : win_width,
+#                      "win_height" : win_height,
+#                      "a" : "a",
+# }
 
 ### 2. Starts the pygame instance
 pygame.init()
@@ -118,8 +124,8 @@ drawBot_on = False
 drawBot_save_format = "mp4"
 drawBot_saveFolder  = "~/Desktop/"
 
-db_canvas_w = 1000 
-db_canvas_h = 1000
+db_canvas_w = win_width 
+db_canvas_h = win_height
 
 ####Animation:
 frames_x_second = 30
@@ -127,10 +133,6 @@ time_multiplier = 1
 simulation_render_time = 15 #👈🏼 in seconds
 print_frame_count = False
 # time steadyness somehow (do sine waves, etc) 
-
-
-
-
 
 def window(title, width, height, fps=frames_x_second):
     """Sets the caption, width, and height of the window that will
