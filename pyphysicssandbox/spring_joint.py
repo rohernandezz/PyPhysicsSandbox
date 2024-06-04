@@ -3,7 +3,7 @@ import math
 
 from .base_shape import BaseShape
 
-##Seems to want the coordinates in the general space, not local to every body 👇🏼
+##👇🏼Seems to want the coordinates in the general space, not local to every body
 class Spring(BaseShape):
     def __init__(self, space, p1, shape1, p2, shape2, length, stiffness, damping):
         # Associate the joint with the location of one of the bodies so
