@@ -76,13 +76,13 @@ class TextBox(Box):
             this_label_fs.append(self.caption)
 
         with drawBot.savedState():
-            drawBot.rotate(degrees, center=(self.x, 1000-self.y)) #NEEEDS CONMVEDRTING TO drawbotY👈🏼
+            drawBot.rotate(degrees, center=(self.x, 1920-self.y)) #NEEEDS CONMVEDRTING TO drawbotY👈🏼
             drawBot.translate(-self.width/2,-self.height/2) #Go back to 0,0
             
             with drawBot.savedState():    
                 drawBot.fill(None)
                 drawBot.stroke(*self.db_color)
-                shifted_y = 1000-self.position.y # FIX THIS HARCODED 1350
+                shifted_y = 1920-self.position.y # FIX THIS HARCODED 1350
                 db_text_rect= (self.position.x,shifted_y,self.width,self.height)
                 drawBot.rect(*db_text_rect)
             

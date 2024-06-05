@@ -44,7 +44,7 @@ class Box(BaseShape):
         ###🎨 DrawBot:
         this_polygon = []
         for i in ps:
-            this_polygon.append((i[0],1000-i[1]))
+            this_polygon.append((i[0],1920-i[1]))
         #print(this_polygon)
 
         with drawBot.savedState():

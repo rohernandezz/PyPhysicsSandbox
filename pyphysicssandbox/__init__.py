@@ -120,7 +120,7 @@ print("drawbot initialized a new drawing: 🎨✅")
 db_default_color = rgb_to_normalized(*default_color)
 
 ### RENDER CONFIGURATIONS:
-drawBot_on = False
+drawBot_on = True
 drawBot_save_format = "mp4"
 drawBot_saveFolder  = "~/Desktop/"
 
@@ -130,7 +130,7 @@ db_canvas_h = win_height
 ####Animation:
 frames_x_second = 30
 time_multiplier = 1
-simulation_render_time = 15 #👈🏼 in seconds
+simulation_render_time = 10 #👈🏼 in seconds
 print_frame_count = False
 # time steadyness somehow (do sine waves, etc) 
 
