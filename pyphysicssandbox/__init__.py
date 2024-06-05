@@ -37,7 +37,7 @@ __all__ = ['window', 'add_observer', 'gravity', 'resistance', 'mouse_clicked',
            'cosmetic_polygon', 'cosmetic_triangle', 'spring',
            'color',
            #START CUSTOMIZATION:
-           "rgb_to_normalized", #COLOR
+           "rgb_to_normalized","normalized_to_rgb", #COLOR
            "textBox", "textBox_with_font",
            ]
 
@@ -59,7 +59,7 @@ def rgb_to_normalized(r, g, b, a):
 
 def normalized_to_rgb(r, g, b, a):
     """
-    Convert RGB values from 0-255 range to 0-1 range.
+    Convert RGB values from 0-1 range to 0-255 range.
     
     Parameters:
     r (int): Red value (0-1)
