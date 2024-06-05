@@ -712,11 +712,6 @@ def _textBox_with_font(p, width, height, caption, font_path, font_size, mass, st
     return result
 
 #####TEXTBOX WITH FONT
-#####TEXTBOX WITH FONT
-
-
-
-
 
 
 

@@ -1,4 +1,4 @@
-simulation_on = False
+#simulation_on = False
 simulation_on = True
 ##############################
 from pyphysicssandbox import *
@@ -86,4 +86,4 @@ box_b.elasticity= gral_elasticity
 
 ##------------------------------------------------------
 
-run(simulation_on)
+run(True)

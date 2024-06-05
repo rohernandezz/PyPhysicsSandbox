@@ -6,14 +6,17 @@ from pyphysicssandbox import *
 from random import random, choice
 
 ########## FUNCTIONS:
-def add_counter_and_make_fs(string):
+def add_counter_and_make_fs(string,font_path,font_size,lineHeight=None):
     f = db.FormattedString()
-    f.font("Helvetica")
-    f.lineHeight(89)
-    f.fontSize(100)
-    for i, c in enumerate(myText):      
+    f.font(font_path)
+    f.fontSize(font_size)
+    if not lineHeight:
+        lineHeight = font_size*0.8
+    f.lineHeight(font_size*.85) 
+
+    for i, c in enumerate(myText):
         f += c
-        f.getNSObject().addAttribute_value_range_("char.counter", i, (i, 1))          
+        f.getNSObject().addAttribute_value_range_("char.counter", i, (i, 1))
     return f
 ##########
 
@@ -63,46 +66,56 @@ elif y_limit == "ceiling":
 floor.color = floor_color
 
 #### DrawBot
+text_box = (200, 750, 800, 800)
 myText = "Diplöe was made for falling"
-the_font_path = "fonts/Diploe-BlackItalic.otf"
+the_font_path = "fonts/Diploe-Bold.otf"
 the_font_size = 100
 db.font(the_font_path)
 db.fontSize(the_font_size)
-fs_w_counter = add_counter_and_make_fs(myText)
-text_box = (50, 10, 900, 800)
+db.lineHeight(the_font_size*.85) 
+fs_w_counter = add_counter_and_make_fs(myText,the_font_path,the_font_size)
 
 my_shapes = {}
 
-
 #####Make a rect for every character
 for i, bounds in enumerate(db.textBoxCharacterBounds(fs_w_counter, text_box)):
-    db.fill(random(), random(), random(), .5)
+    #db.fill(random(), random(), random(), .5)
     x, y, w, h = bounds.bounds 
+    #y = win_height-y
+    this_baselineOffset = bounds.baselineOffset
     #rect(x, y, w, h)  
     path = db.BezierPath()            
     path.text(bounds.formattedSubString)
-    if path:
-        add_X = x
-        add_Y = y+bounds.baselineOffset
-        with db.savedState():
-            db.translate(x, y + bounds.baselineOffset)
-            db.drawPath(path)
-            db.fill(None)
-            db.stroke(random(), random(), random(), .5)
-            minx, miny, maxx, maxy = path.bounds()
-            db.rect(minx, miny, maxx-minx, maxy-miny)
-        
-        letter_rect = (minx+add_X, miny+add_Y, maxx-minx, maxy-miny)    
-        db.rect(*letter_rect)
-
-        my_shapes[i]= ((letter_rect[0],letter_rect[1]), textBox_with_font((letter_rect[0], letter_rect[1]),letter_rect[2],letter_rect[3],myText[i],the_font_path,the_font_size-40))
-        my_shapes[i][1].elasticity=.9
-
+    if path.bounds():
+        _x, _y, _w, _h = path.bounds()
     else:
-        my_shapes[i]= ((letter_rect[0],letter_rect[1]), box((letter_rect[0], letter_rect[1]),letter_rect[2], letter_rect[3]))
-        my_shapes[i][1].elasticity=0.1
-        my_shapes[i][1].color=Color("White")
-        my_shapes[i][1].db_color= (None,None,None,None)
+        _x, _y, _w, _h = 0,0,0,0
+
+    if 1==1:
+        add_X = x
+        add_Y = y
+        #    db.translate(x, y + bounds.baselineOffset
+        #    db.drawPath(path)
+        #    db.fill(None)
+        #    db.stroke(random(), random(), random(), .5)
+        if path.bounds()== None:
+            minx, miny, maxx, maxy = 0,0,1,1
+        else:   
+            minx, miny, maxx, maxy = path.bounds()
+        
+
+        letter_rect = (add_X, add_Y + maxy-_y, maxx - minx, maxy- miny)
+        db.rect(*letter_rect)
+        
+        my_shapes[i]= ((letter_rect[0],win_height-letter_rect[1]),
+                        textBox_with_font((letter_rect[0],win_height-letter_rect[1]),letter_rect[2],letter_rect[3],myText[i],the_font_path,the_font_size))
+        my_shapes[i][1].=.9
+    
+    #else:
+    #    my_shapes[i]= ((letter_rect[0],letter_rect[1]), box((letter_rect[0], letter_rect[1]),letter_rect[2], letter_rect[3]))
+    #    my_shapes[i][1].elasticity=0.1
+    #    my_shapes[i][1].color=Color("White")
+    #    my_shapes[i][1].db_color= (None,None,None,None)
         
     # if i > 0:
     #     prevShape = my_shapes[i-1]
@@ -112,4 +125,4 @@ for i, bounds in enumerate(db.textBoxCharacterBounds(fs_w_counter, text_box)):
 
 ####------------------
 
-run()
+run(simulation_on) 

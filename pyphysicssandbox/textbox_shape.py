@@ -24,14 +24,13 @@ class TextBox(Box):
         #print(self.font.size(caption))#SIZE OF TEXT DRAWING CALCULATED BY PYGAME 
 
         if type(caption) == str: 
-            print("IZ STRING")
+            #print("IZ STRING")
             self.caption = caption
         else: # Write elif to check if it actually is a formattedString 😬
-             print("noString: IZ (hopefully) drawBot.FormattedString")
+             #print("noString: IZ (hopefully) drawBot.FormattedString")
              self.caption = str(caption)
              self.label_fs = caption
              #the text string
-
 
         self.space = space #simulation space
         self.static = static 
@@ -72,23 +71,40 @@ class TextBox(Box):
             this_label_fs = drawBot.FormattedString(align='center')
             this_label_fs.font(self.font_path)
             this_label_fs.fontSize(self.font_size)
+            this_label_fs.lineHeight(self.font_size*.85)
             this_label_fs.fill(*self.db_color)
             this_label_fs.append(self.caption)
 
         with drawBot.savedState():
             drawBot.rotate(degrees, center=(self.x, 1920-self.y)) #NEEEDS CONMVEDRTING TO drawbotY👈🏼
-            drawBot.translate(-self.width/2,-self.height/2) #Go back to 0,0
+            #drawBot.translate(-self.width/2,-self.height/2) #Go back to 0,0
             
             with drawBot.savedState():    
                 drawBot.fill(None)
                 drawBot.stroke(*self.db_color)
                 shifted_y = 1920-self.position.y # FIX THIS HARCODED 1350
-                db_text_rect= (self.position.x,shifted_y,self.width,self.height)
-                drawBot.rect(*db_text_rect)
-            
-            #drawBot.fill(None)
-            #drawBot.stroke(None)
-            drawBot.textBox(this_label_fs,db_text_rect)
+                db_text_rect= (self.position.x-self.width/2,shifted_y-self.height/2,self.width,self.height)
+                #drawBot.rect(*db_text_rect)
+
+            if len(this_label_fs) == 1:
+                #print()
+                path = drawBot.BezierPath()
+                path.text(this_label_fs)
+                origin_x,origin_y = db_text_rect[0],db_text_rect[1]
+                _w, _h = db_text_rect[2],db_text_rect[3]
+
+                #print(f"😀{path.bounds()}")
+                with drawBot.savedState():
+                    #if origin_y == 1432.499950349331:
+                        #origin_y = 1452.499950349331
+                    drawBot.translate(origin_x+self.width/2,origin_y)
+                    #drawBot.fill(1,0,0)
+                    #drawBot.rect(0,0,5,5)
+                    drawBot.fill(*self.db_color)
+                    drawBot.drawPath(path)
+            else:
+                print("!!!")
+                #drawBot.textBox(this_label_fs,db_text_rect)
 
     def __repr__(self):
         prefix = 'box'

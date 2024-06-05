@@ -35,6 +35,7 @@ class Box(BaseShape):
             x = self._x-self.width/2
             y = self._y-self.height/2
             ps = [(x, y), (x+self.width, y), (x+self.width, y+self.height), (x,y+self.height), (x, y)]
+            
         else:
             ps = [self.body.local_to_world(v) for v in self.shape.get_vertices()]
             ps += [ps[0]]
