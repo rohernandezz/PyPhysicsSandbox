@@ -91,7 +91,8 @@ the_font_size = 100
 #db.font(the_font_path)
 #db.fontSize(the_font_size)
 #db.lineHeight(the_font_size*.85) 
-fs_w_counter = add_counter_and_make_fs(myText,the_font_path,the_font_size)#fontVariations={"wdth":60})
+#fs_w_counter = add_counter_and_make_fs(myText,the_font_path,the_font_size,fontVariations={"wdth":60})
+fs_w_counter =                  make_fs(myText,the_font_path,the_font_size,fontVariations={"wdth":60})
 my_shapes = {}
 
 #####Make a rect for every character
@@ -126,7 +127,7 @@ for i, bounds in enumerate(db.textBoxCharacterBounds(fs_w_counter, text_box)):
         
 
         the_string = str(bounds.formattedSubString)
-        #print(f"the_string: {the_string}")
+        print(f"the_string: {the_string}")
 
         my_shapes[i]= ((letter_rect[0],win_height-letter_rect[1]),
                         textBox_with_font((letter_rect[0],win_height-letter_rect[1]),letter_rect[2],letter_rect[3],the_string,the_font_path,the_font_size))

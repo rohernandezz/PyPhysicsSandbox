@@ -5,6 +5,7 @@ import math
 
 from .base_shape import BaseShape
 
+render_height=10000
 
 class Box(BaseShape):
     def __init__(self, space, x, y, width, height, radius, mass, static, cosmetic=False):
@@ -40,13 +41,10 @@ class Box(BaseShape):
             ps = [self.body.local_to_world(v) for v in self.shape.get_vertices()]
             ps += [ps[0]]
 
-        #print(f"👉🏼{ps}👈🏼")
-
         ###🎨 DrawBot:
         this_polygon = []
         for i in ps:
-            this_polygon.append((i[0],1920-i[1]))
-        #print(this_polygon)
+            this_polygon.append((i[0],render_height-i[1]))
 
         with drawBot.savedState():
             drawBot.fill(*self.db_color)

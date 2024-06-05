@@ -6,32 +6,17 @@ from pyphysicssandbox import *
 from random import random, choice
 
 ########## FUNCTIONS:
-def add_counter_and_make_fs(string,font_path,font_size,fontVariations=None,lineHeight=None):
+def add_counter_and_make_fs(string,font_path,font_size,lineHeight=None):
     f = db.FormattedString()
     f.font(font_path)
     f.fontSize(font_size)
-    if fontVariations:
-        f.fontVariations(**fontVariations)
     if not lineHeight:
-        lineHeight = font_size*0.85
-    f.lineHeight(lineHeight) 
+        lineHeight = font_size*0.8
+    f.lineHeight(font_size*.85) 
 
     for i, c in enumerate(myText):
         f += c
         f.getNSObject().addAttribute_value_range_("char.counter", i, (i, 1))
-    return f
-
-
-def make_fs(string,font_path,font_size,fontVariations=None,lineHeight=None):
-    f = db.FormattedString()
-    f.font(font_path)
-    f.fontSize(font_size)
-    if fontVariations:
-        f.fontVariations(**fontVariations)
-    if not lineHeight:
-        lineHeight = font_size*0.85
-    f.lineHeight(lineHeight) 
-    f+=string
     return f
 ##########
 
@@ -41,10 +26,10 @@ def make_fs(string,font_path,font_size,fontVariations=None,lineHeight=None):
 win_width = 1080
 win_height = 1000
 w,h = win_width, win_height
-window('Falling_Diploe_01', w, h, fps=30)
+window('Floating_Diploe_02', w, h, fps=30)
 #-----------------------------
-gravity(0,500)       ###👈🏼👈🏼GRAVITY
-resistance = .98     #sandbox default is .95
+gravity(0,-500)       ###👈🏼👈🏼GRAVITY
+resistance = .95     #sandbox default is .95
 gral_elasticity = .9 #sandbox default is .9
 gral_friction   = .6   #sandbox default is .6
 #---------------------------------------------------
@@ -60,7 +45,7 @@ floor_h = 2
 floor_color = Color("Red")
 wall_w =  5
 wall_color = Color("Blue")
-y_limit = "floor"
+y_limit = "ceiling"
 diploe_grey   = rgb_to_normalized(218,219,238,255)
 diploe_yellow = rgb_to_normalized(230,228,102,255)
 
@@ -69,6 +54,10 @@ left_wall  = static_box((0,0), wall_w, h)
 right_wall = static_box((w-wall_w,0), wall_w, h)
 left_wall.color = wall_color
 right_wall.color = wall_color
+#### Background
+background = cosmetic_box((0, 0), w, h)
+background.color = Color("Grey")
+background.db_color = diploe_yellow
 
 #### Floor or ceiling: (both use floorH:int)
 if y_limit == "floor":
@@ -78,20 +67,16 @@ elif y_limit == "ceiling":
 floor.color = floor_color
 floor.elasticity = .9
 
-#### Background
-background = cosmetic_box((0, 0), w, h)
-background.color = Color("Grey")
-background.db_color = (1,0,0,1)
-
 #### DrawBot
-text_box = (100, 500, 800, 500)
-myText = "Diplöe is a font that is in a bigger paragraph to test how three lines or more work why line 3 dissapears?"
-the_font_path = "fonts/VF/DiploeVF.ttf"
+text_box = (200, 250, 800, 800)
+myText = "Diplöe was made for floating"
+the_font_path = "fonts/Diploe-Bold.otf"
 the_font_size = 100
-#db.font(the_font_path)
-#db.fontSize(the_font_size)
-#db.lineHeight(the_font_size*.85) 
-fs_w_counter = add_counter_and_make_fs(myText,the_font_path,the_font_size)#fontVariations={"wdth":60})
+db.font(the_font_path)
+db.fontSize(the_font_size)
+db.lineHeight(the_font_size*.85) 
+fs_w_counter = add_counter_and_make_fs(myText,the_font_path,the_font_size)
+
 my_shapes = {}
 
 #####Make a rect for every character
@@ -124,13 +109,9 @@ for i, bounds in enumerate(db.textBoxCharacterBounds(fs_w_counter, text_box)):
         letter_rect = (add_X, add_Y + maxy-_y, maxx - minx, maxy- miny)
         db.rect(*letter_rect)
         
-
-        the_string = str(bounds.formattedSubString)
-        #print(f"the_string: {the_string}")
-
         my_shapes[i]= ((letter_rect[0],win_height-letter_rect[1]),
-                        textBox_with_font((letter_rect[0],win_height-letter_rect[1]),letter_rect[2],letter_rect[3],the_string,the_font_path,the_font_size))
-        my_shapes[i][1].body.center_of_mass=(100,0)
+                        textBox_with_font((letter_rect[0],win_height-letter_rect[1]),letter_rect[2],letter_rect[3],myText[i],the_font_path,the_font_size))
+        #my_shapes[i][1].body.center_of_mass=(100,0)
     
     #else:
     #    my_shapes[i]= ((letter_rect[0],letter_rect[1]), box((letter_rect[0], letter_rect[1]),letter_rect[2], letter_rect[3]))
