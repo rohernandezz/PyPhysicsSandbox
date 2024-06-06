@@ -6,6 +6,7 @@ import math
 from .box_shape import Box
 from .base_shape import BaseShape
 
+render_width  = 2000
 render_height = 1000
 
 class TextBox(Box):
@@ -13,11 +14,12 @@ class TextBox(Box):
 
         self.width =  width
         self.height = height
-
         self.font = pygame.font.Font(font_path, font_size)
         self.font_path = font_path
         self.font_size = font_size
         self.label_fs = False
+
+        self.text_align='left'
 
         #👇🏼DONT care about the textSize cause it'll be a drawBot textBox, and if it doesn't fit, drawBot will handle
         #👇🏼.....write smth to handle better preview *LATER*
@@ -73,36 +75,41 @@ class TextBox(Box):
         if self.label_fs:
             this_label_fs = self.label_fs
         else:
-            this_label_fs = drawBot.FormattedString(align='left')
+            this_label_fs = drawBot.FormattedString(align=self.text_align)
             this_label_fs.font(self.font_path)
             this_label_fs.fontSize(self.font_size)
-            var_wght_value = drawBot.remap(shifted_y, 1000, 0, 200, 800)
-            this_label_fs.fontVariations(wdth=60,wght=var_wght_value,)
-            this_label_fs.lineHeight(self.font_size*.9)
+            ##### FONT VARIATIONS
+            var_slnt_value = drawBot.remap(self.position.x, 0, render_width, 0, -11)
+            var_wght_value = drawBot.remap(shifted_y, render_height, 0, 200, 800)
+            this_label_fs.fontVariations(wdth=82,wght=var_wght_value,slnt=var_slnt_value)
+            #####///FONT VARIATIONS
+            this_label_fs.lineHeight(self.font_size*0.95)
             this_label_fs.fill(*self.db_color)
             this_label_fs.append(self.caption)
 
         with drawBot.savedState():
-            drawBot.rotate(degrees, center=(self.x, render_height-self.y)) #NEEEDS CONMVEDRTING TO drawbotY👈🏼
-            #drawBot.translate(-self.width/2,-self.height/2) #Go back to 0,0
+            drawBot.rotate(degrees, center=(self.x, render_height-self.y))
+            #drawBot.translate(-self.width/2,-self.height/2) #Go back to 0,0 
             
             with drawBot.savedState():    
                 drawBot.fill(None)
                 drawBot.stroke(None)
                 db_text_rect= (self.position.x-self.width/2,shifted_y-self.height/2,self.width,self.height)
-                #drawBot.fill(.9,.9,.9,.8)
+                #drawBot.fill(.9,.9,.9,.8) #grey fill 
                 drawBot.rect(*db_text_rect)
 
-            if len(this_label_fs) == 1: #SINGLE CHARACTER
+            if len(this_label_fs) == 1: #####SINGLE CHARACTER
                 path = drawBot.BezierPath()
                 path.text(this_label_fs)
                 origin_x,origin_y = db_text_rect[0],db_text_rect[1]
                 _w, _h = db_text_rect[2],db_text_rect[3]
-
+                
                 with drawBot.savedState():
-                    if this_label_fs.align == "left":
+                    if self.text_align == "left":
                         drawBot.translate(origin_x,origin_y)
-                    elif this_label_fs.align == "center":
+                        #print("🤖🤖🤖")
+                    elif self.text_align == "center": 
+                        #print("💄💄💄💄")
                         drawBot.translate(origin_x+self.width/2,origin_y)
                     drawBot.fill(*self.db_color)
                     drawBot.drawPath(path)
@@ -114,7 +121,7 @@ class TextBox(Box):
                     drawBot.fill(*self.db_color)
                     overflow = drawBot.textBox(this_label_fs,db_text_rect)
                     #print(f"the_string: {this_label_fs}")
-                    print(f"😎Rect: {db_text_rect}")
+                    #print(f"😎Rect: {db_text_rect}")
                     if overflow:
                         print(f"Overflow: {overflow}")
                         print(f"Rect: {db_text_rect}")

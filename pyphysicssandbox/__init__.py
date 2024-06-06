@@ -130,8 +130,8 @@ db_canvas_h = win_height
 ####Animation:
 frames_x_second = 30
 time_multiplier = 1
-simulation_render_time = 15 #👈🏼 in seconds
-print_frame_count = False
+simulation_render_time = 7 #👈🏼 in seconds
+print_frame_count = True
 # time steadyness somehow (do sine waves, etc) 
 
 def window(title, width, height, fps=frames_x_second):
@@ -652,7 +652,8 @@ def _textBox(p, width, height, caption, mass, static, cosmetic=False):
     from .textbox_shape import TextBox
 
     if mass == -1:
-        mass = width * height * 1.2 ## I imagine a text is somewhat more heavier than a non text box? 🤔
+        mass = width * height * .6 ## I imagine a text is somewhat more heavier than a non text box? 🤔
+        print(f"🐹{mass}")
     # Polygons expect x,y to be the center point
     x = p[0] + width / 2
     y = p[1] + height / 2

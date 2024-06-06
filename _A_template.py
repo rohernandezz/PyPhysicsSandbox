@@ -86,4 +86,4 @@ box_b.elasticity= gral_elasticity
 
 ##------------------------------------------------------
 
-run(True)
+run(simulation_on)
