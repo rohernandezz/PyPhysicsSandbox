@@ -5,7 +5,7 @@ import math
 
 from .base_shape import BaseShape
 
-render_height=10000
+render_height=1000
 
 class Box(BaseShape):
     def __init__(self, space, x, y, width, height, radius, mass, static, cosmetic=False):

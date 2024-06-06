@@ -130,7 +130,7 @@ db_canvas_h = win_height
 ####Animation:
 frames_x_second = 30
 time_multiplier = 1
-simulation_render_time = 10 #👈🏼 in seconds
+simulation_render_time = 15 #👈🏼 in seconds
 print_frame_count = False
 # time steadyness somehow (do sine waves, etc) 
 

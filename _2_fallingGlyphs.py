@@ -1,4 +1,4 @@
-#simulation_on = False
+simulation_on = False
 simulation_on = True
 ##############################
 from pyphysicssandbox import *
@@ -7,10 +7,10 @@ import drawBot
 #----------------
 #General Settings:
 #----------------
-win_width = 2000
+win_width = 1080
 win_height = 1000
 w,h = win_width, win_height
-window('Paragraph with springs Demo', w, h, fps=30)
+window('DEMO_0', w, h, fps=30)
 #-----------------------------
 gravity(0,300)       ###👈🏼👈🏼GRAVITY
 resistance = .95     #sandbox default is .95
@@ -52,7 +52,6 @@ right_wall.color = wall_color
 background = cosmetic_box((0, 0), w, h)
 background.color = Color("Grey")
 background.db_color = diploe_grey
-
 #### Floor or ceiling: (both use floorH:int)
 if y_limit == "floor":
     floor      = static_box((0, h-floor_h), w, floor_h)    
@@ -87,4 +86,4 @@ box_b.elasticity= gral_elasticity
 
 ##------------------------------------------------------
 
-run(True)
+run(simulation_on)
