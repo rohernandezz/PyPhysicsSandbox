@@ -80,7 +80,7 @@ class TextBox(Box):
             this_label_fs.fontSize(self.font_size)
             ##### FONT VARIATIONS
             var_slnt_value = drawBot.remap(self.position.x, 0, render_width, 0, -11)
-            var_wght_value = drawBot.remap(shifted_y, render_height, 0, 200, 800)
+            var_wght_value = drawBot.remap(shifted_y, render_height, 0, 200, 600)
             this_label_fs.fontVariations(wdth=82,wght=var_wght_value,slnt=var_slnt_value)
             #####///FONT VARIATIONS
             this_label_fs.lineHeight(self.font_size*0.95)
