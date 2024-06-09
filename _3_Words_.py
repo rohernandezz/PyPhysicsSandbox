@@ -93,7 +93,7 @@ texts_a   = [ "text1",
 box_dimensions   = (500, 100)
 boxes_a = {}
 for i,origin in enumerate(origins_a):
-    boxes_a[i] = textBox_with_font(origin,box_dimensions[0],box_dimensions[1],texts_a[i],"fonts/Diploe-BoldItalic.otf",80)
+    boxes_a[i] = textBox_with_font(origin,box_dimensions[0],box_dimensions[1],texts_a[i],"fonts/Diploe-BoldItalic.otf",300)
     boxes_a[i].color    = Color("Yellow")
     boxes_a[i].db_color = diploe_yellow
     boxes_a[i].elasticity= gral_elasticity

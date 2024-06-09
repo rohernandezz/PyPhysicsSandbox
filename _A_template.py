@@ -7,12 +7,12 @@ import drawBot
 #----------------
 #General Settings:
 #----------------
-win_width = 1080
-win_height = 1920
+win_width = 2000
+win_height = 1000
 w,h = win_width, win_height
 window('DEMO_0', w, h, fps=30)
 #-----------------------------
-gravity(0,300)       ###👈🏼👈🏼GRAVITY
+gravity(-10,300)       ###👈🏼👈🏼GRAVITY
 resistance = .95     #sandbox default is .95
 gral_elasticity = .9 #sandbox default is .9
 gral_friction   = .6   #sandbox default is .6
@@ -78,8 +78,8 @@ box_a.color    = Color("Yellow")
 box_a.db_color = diploe_yellow
 box_a.elasticity= gral_elasticity
 
-boxB=(w*.1,400,w*.8,220)
-box_b = textBox_with_font((boxB[0], boxB[1]),boxB[2],boxB[3],"my text","fonts/Diploe-BoldItalic.otf",140)
+boxB=(w*.1,400+100,w*.8,220)
+box_b = textBox_with_font((boxB[0], boxB[1]),boxB[2],boxB[3],"my text","fonts/DiploeNarrow-Light.otf",140)
 box_b.color    = Color("Black")
 box_b.db_color = (0,0,0,1)
 box_b.elasticity= gral_elasticity
