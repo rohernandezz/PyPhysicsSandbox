@@ -130,7 +130,7 @@ db_canvas_h = win_height
 ####Animation:
 frames_x_second = 30
 time_multiplier = 1
-simulation_render_time = 7 #👈🏼 in seconds
+simulation_render_time = 10 #👈🏼 in seconds
 print_frame_count = True
 # time steadyness somehow (do sine waves, etc) 
 
@@ -670,7 +670,7 @@ def _textBox(p, width, height, caption, mass, static, cosmetic=False):
 #####👇🏼👇🏼👇🏼👇🏼TEXTBOX WITH FONT
 
 
-def textBox_with_font(p, width, height, caption, font_path, font_size, mass=-1):
+def textBox_with_font(p, width, height, caption, font_path, font_size, font_variations=False, mass=-1):
     """Creates a text rectangle that reacts to gravity, using
     Arial 12 point font.
 
@@ -692,10 +692,10 @@ def textBox_with_font(p, width, height, caption, font_path, font_size, mass=-1):
 
     """
 
-    return _textBox_with_font(p, width, height, caption, font_path, font_size, -1, False)
+    return _textBox_with_font(p, width, height, caption, font_path, font_size, mass, False, font_variations=font_variations, cosmetic=False)
 
 
-def _textBox_with_font(p, width, height, caption, font_path, font_size, mass, static, cosmetic=False):
+def _textBox_with_font(       p, width, height, caption, font_path, font_size, mass, static, font_variations=False, cosmetic=False, ):
 
     from .textbox_shape import TextBox
 
@@ -706,7 +706,7 @@ def _textBox_with_font(p, width, height, caption, font_path, font_size, mass, st
     x = p[0] + width / 2
     y = p[1] + height / 2
 
-    result = TextBox(space, x, y, width, height, caption, font_path, font_size, mass, static, cosmetic)
+    result = TextBox(space, x, y, width, height, caption, font_path, font_size, mass, static, font_variations, cosmetic)
     result.color = default_color
     shapes[result.collision_type] = result
 

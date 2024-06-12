@@ -10,7 +10,7 @@ render_width  = 2000
 render_height = 1000
 
 class TextBox(Box):
-    def __init__(self, space, x, y, width, height, caption, font_path, font_size, mass, static, cosmetic=False):
+    def __init__(self, space, x, y, width, height, caption, font_path, font_size, mass, static, font_variations=False, cosmetic=False):
 
         self.width =  width
         self.height = height
@@ -18,6 +18,11 @@ class TextBox(Box):
         self.font_path = font_path
         self.font_size = font_size
         self.label_fs = False
+        
+        if font_variations:
+            self.font_variations = font_variations
+        else:
+            self.font_variations = None
 
         self.text_align='left'
 
@@ -79,9 +84,12 @@ class TextBox(Box):
             this_label_fs.font(self.font_path)
             this_label_fs.fontSize(self.font_size)
             ##### FONT VARIATIONS
-            var_slnt_value = drawBot.remap(self.position.x, 0, render_width, 0, -11)
-            var_wght_value = drawBot.remap(shifted_y, render_height, 0, 200, 600)
-            this_label_fs.fontVariations(wdth=82,wght=var_wght_value,slnt=var_slnt_value)
+            if self.font_variations:
+                print(f'aaaaa___{self.font_variations}')
+                this_label_fs.fontVariations(**self.font_variations)    
+            #var_slnt_value = drawBot.remap(self.position.x, 0, render_width, 0, -11)
+            #var_wght_value = drawBot.remap(shifted_y, render_height, 0, 200, 600)
+            
             #####///FONT VARIATIONS
             this_label_fs.lineHeight(self.font_size*0.95)
             this_label_fs.fill(*self.db_color)
