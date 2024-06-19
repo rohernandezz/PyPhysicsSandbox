@@ -104,6 +104,7 @@ class TextBox(Box):
                 drawBot.stroke(None)
                 db_text_rect= (self.position.x-self.width/2,shifted_y-self.height/2,self.width,self.height)
                 #drawBot.fill(.9,.9,.9,.8) #grey fill 
+                drawBot.stroke(0)
                 drawBot.rect(*db_text_rect)
 
             if len(this_label_fs) == 1: #####SINGLE CHARACTER

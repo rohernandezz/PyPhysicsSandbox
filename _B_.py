@@ -1,5 +1,5 @@
-#simulation_on = False
-simulation_on = True
+simulation_on = False
+#simulation_on = True
 ##############################
 from pyphysicssandbox import *
 import drawBot
@@ -10,9 +10,9 @@ import drawBot
 win_width = 2000
 win_height = 1000
 w,h = win_width, win_height
-window('DEMO_0', w, h, fps=30)
+window('DEMO_B_', w, h, fps=30)
 #-----------------------------
-gravity(-10,300)       ###👈🏼👈🏼GRAVITY
+gravity(0,350)       ###👈🏼👈🏼GRAVITY
 resistance = .95     #sandbox default is .95
 gral_elasticity = .9 #sandbox default is .9
 gral_friction   = .6   #sandbox default is .6
@@ -36,7 +36,7 @@ Setup foor, walls, anchors, etc, here: ---
 '''
 ### World variables:
 floor_h = 2
-floor_color = Color("Red")
+floor_color = Color("Grey")
 wall_w =  5
 wall_color = Color("Blue")
 y_limit = "floor"
@@ -48,16 +48,18 @@ left_wall  = static_box((0,0), wall_w, h)
 right_wall = static_box((w-wall_w,0), wall_w, h)
 left_wall.color = wall_color
 right_wall.color = wall_color
-#### Background
-background = cosmetic_box((0, 0), w, h)
-background.color = Color("Grey")
-background.db_color = diploe_grey
+
 #### Floor or ceiling: (both use floorH:int)
 if y_limit == "floor":
     floor      = static_box((0, h-floor_h), w, floor_h)    
 elif y_limit == "ceiling":
     ceiling    = static_box((0, 0), w, floor_h)
 floor.color = floor_color
+
+#### Background
+background = cosmetic_box((0, 0), w, h)
+background.color = Color("Grey")
+background.db_color = diploe_grey
 
 #### DrawBot
 
@@ -72,18 +74,20 @@ floor.color = floor_color
 '''
 Setup sandbox objects here.----
 '''
-boxA=(w*.1,0,w*.8,220)
-box_a = textBox_with_font((boxA[0], boxA[1]),boxA[2],boxA[3],"my text","fonts/Diploe-BoldItalic.otf",140)
+boxA=(400,100,1180,220)
+textA = "Liberación"
+box_a = textBox_with_font((boxA[0],boxA[1]), boxA[2],boxA[3], textA, "fonts/VF/DiploeVF.ttf",180, font_variations={"wght":400,"wdth":150,"slnt":-11,})
 box_a.color    = Color("Yellow")
 box_a.db_color = diploe_yellow
 box_a.elasticity= gral_elasticity
 
-boxB=(w*.1,400,w*.8,220)
-box_b = textBox_with_font((boxB[0], boxB[1]),boxB[2],boxB[3],"my text","fonts/Diploe-BoldItalic.otf",140)
+boxB=(400,600,1000,220)
+textB = "Schockierend"
+box_b = textBox_with_font((boxB[0],boxB[1]), boxB[2],boxB[3], textB, "fonts/VF/DiploeVF.ttf",180, font_variations={"wght":400,"wdth":100,"slnt":0,})
 box_b.color    = Color("Yellow")
 box_b.db_color = diploe_yellow
 box_b.elasticity= gral_elasticity
 
 ##------------------------------------------------------
 
-run(True)
+run(simulation_on)

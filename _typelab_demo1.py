@@ -10,7 +10,7 @@ import drawBot
 win_width = 2000
 win_height = 1000
 w,h = win_width, win_height
-window('DEMO_0', w, h, fps=30)
+window('Typelab_DEMO_1', w, h, fps=30)
 #-----------------------------
 gravity(-10,300)       ###👈🏼👈🏼GRAVITY
 resistance = .95     #sandbox default is .95
@@ -72,18 +72,20 @@ floor.color = floor_color
 '''
 Setup sandbox objects here.----
 '''
-boxA=(w*.1,0,w*.8,220)
-box_a = textBox_with_font((boxA[0], boxA[1]),boxA[2],boxA[3],"my text","fonts/Diploe-BoldItalic.otf",140)
-box_a.color    = Color("Yellow")
-box_a.db_color = diploe_yellow
+boxA=(w*.1,100,w*.6,220)
+#box_a = textBox_with_font((boxA[0], boxA[1]),boxA[2],boxA[3],"","fonts/Comic Sans MS.ttf",140)
+box_a = textBox_with_font((boxA[0], boxA[1]),boxA[2],boxA[3],"tortilla.studio","fonts/Comic Sans MS.ttf",140)
+box_a.color    = Color("Red")
+box_a.db_color = (1,0,0,1)
 box_a.elasticity= gral_elasticity
 
 boxB=(w*.1,400,w*.8,220)
-box_b = textBox_with_font((boxB[0], boxB[1]),boxB[2],boxB[3],"my text","fonts/Diploe-BoldItalic.otf",140)
-box_b.color    = Color("Yellow")
-box_b.db_color = diploe_yellow
+box_b = textBox_with_font((boxB[0], boxB[1]),boxB[2],boxB[3],"@Typelab 20204","fonts/Comic Sans MS.ttf",140)
+box_b.color    = Color("Blue")
+box_b.db_color = (0,0,1,1)
 box_b.elasticity= gral_elasticity
 
 ##------------------------------------------------------
 
+#run(False)
 run(True)
