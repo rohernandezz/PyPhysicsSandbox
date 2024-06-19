@@ -10,7 +10,7 @@ import drawBot
 #=================
 #👉🏼👉🏼Canvas settings:
 #-------------------
-canvas.window_title = "Demo_B"
+canvas.window_title = "Demo_B_Template"
 canvas.render_width  = 2000
 canvas.render_height = 1000
 canvas.frames_x_second = 30

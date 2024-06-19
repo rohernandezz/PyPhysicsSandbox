@@ -1,3 +1,4 @@
+box_stroke_on = False
 import drawBot
 import pygame
 import pymunk
@@ -105,14 +106,17 @@ class TextBox(Box):
                 drawBot.stroke(None)
                 db_text_rect= (self.position.x-self.width/2,shifted_y-self.height/2,self.width,self.height)
                 #drawBot.fill(.9,.9,.9,.8) #grey fill 
-                drawBot.stroke(0)
+                if box_stroke_on:
+                    drawBot.stroke(0)
                 drawBot.rect(*db_text_rect)
-
+            
+            #Descomponer rectangulo:
+            origin_x,origin_y = db_text_rect[0],db_text_rect[1]
+            _w, _h = db_text_rect[2],db_text_rect[3]
+            
             if len(this_label_fs) == 1: #####SINGLE CHARACTER
                 path = drawBot.BezierPath()
                 path.text(this_label_fs)
-                origin_x,origin_y = db_text_rect[0],db_text_rect[1]
-                _w, _h = db_text_rect[2],db_text_rect[3]
                 
                 with drawBot.savedState():
                     if self.text_align == "left":
@@ -125,16 +129,13 @@ class TextBox(Box):
                     drawBot.drawPath(path)
 
             else: ####LINE OF TEXT?
-                origin_x,origin_y = db_text_rect[0],db_text_rect[1]
                 with drawBot.savedState():
                     #drawBot.translate(origin_x+self.width/2,origin_y)
                     drawBot.fill(*self.db_color)
-                    overflow = drawBot.textBox(this_label_fs,db_text_rect)
+                    drawBot.text(this_label_fs,(origin_x,origin_y+_h*.22))
                     #print(f"the_string: {this_label_fs}")
                     #print(f"😎Rect: {db_text_rect}")
-                    if overflow:
-                        print(f"Overflow: {overflow}")
-                        print(f"Rect: {db_text_rect}")
+
 
     def __repr__(self):
         prefix = 'box'

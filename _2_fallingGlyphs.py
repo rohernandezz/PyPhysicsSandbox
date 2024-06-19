@@ -9,7 +9,7 @@ from random import random, choice
 from Diploe_texts import *
 
 ########## FUNCTIONS:
-def add_counter_and_make_fs(string,font_path,font_size,fontVariations=None,lineHeight=None):
+def add_counter_and_make_fs(string,font_path,font_size,font_variations=None,lineHeight=None):
     f = db.FormattedString()
     f.font(font_path)
     f.fontSize(font_size)

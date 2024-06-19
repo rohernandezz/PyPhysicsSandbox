@@ -367,7 +367,7 @@ def _box(p, width, height, mass, static, radius=0, cosmetic=False):
     from .box_shape import Box
 
     if mass == -1:
-        mass = width * height
+        mass = width * height * .6
 
     # Polygons expect x,y to be the center point
     x = p[0] + width / 2
@@ -638,7 +638,7 @@ def _textBox(p, width, height, caption, mass, static, cosmetic=False):
     from .textbox_shape import TextBox
 
     if mass == -1:
-        mass = width * height * .6 ## I imagine a text is somewhat more heavier than a non text box? 🤔
+        mass = width * height * .8 ## I imagine a text is somewhat more heavier than a non text box? 🤔
         print(f"🐹{mass}")
     # Polygons expect x,y to be the center point
     x = p[0] + width / 2
@@ -686,7 +686,7 @@ def _textBox_with_font(       p, width, height, caption, font_path, font_size, m
     from .textbox_shape import TextBox
 
     if mass == -1:
-        mass = width * height * 1.2 ## I imagine a text is somewhat more heavier than a non text box? 🤔
+        mass = width * height * .8 ## I imagine a text is somewhat more heavier than a non text box? 🤔
 
     # Polygons expect x,y to be the center point
     x = p[0] + width / 2
@@ -1029,7 +1029,7 @@ def deactivate(shape):
         return
 
     shape.deactivate()
-    del shapes[shape.collision_type]
+    del canvas.shapes[shape.collision_type]
 
 
 def reactivate(shape):
@@ -1190,7 +1190,7 @@ def run(do_physics=True):
 
         ####👾 pygame:
         pygame.display.flip()
-        clock.tick(1/canvas.frames_x_second*1000)#👈🏼 pygame.clock is in milliseconds so it's 1/frames_x_second * 1000
+        clock.tick(1/canvas.frames_x_second*10000)#👈🏼 pygame.clock is in milliseconds so it's 1/frames_x_second * 1000
 
         frame_count += 1
         if canvas.print_frame_count:

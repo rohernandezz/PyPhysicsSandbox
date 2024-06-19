@@ -2,9 +2,7 @@ import pygame
 import pymunk
 import math
 
-from pyphysicssandbox import pin
-#from pyphysicssandbox import win_width
-#from pyphysicssandbox import win_height
+#from pyphysicssandbox import pin
 from pyphysicssandbox import canvas, space
 
 from pyphysicssandbox import rgb_to_normalized

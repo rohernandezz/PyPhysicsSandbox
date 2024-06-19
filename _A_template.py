@@ -10,7 +10,7 @@ import drawBot
 #=================
 #👉🏼👉🏼Canvas settings:
 #-------------------
-canvas.window_title = "A_Template"
+canvas.window_title = "Demo_A_Template"
 canvas.render_width  = 2000
 canvas.render_height = 1000
 canvas.frames_x_second = 30
@@ -22,9 +22,9 @@ w,h = canvas.win_width, canvas.win_height
 #----------------------
 #Gral physics settings:
 #----------------------
-canvas.gravity(0,350)  ###👈🏼👈🏼GRAVITY:(x,y)
+canvas.gravity(0,150)  ###👈🏼👈🏼GRAVITY:(x,y)
 resistance(.95) #sandbox default is .95
-gral_elasticity = .9   #sandbox default is .9
+gral_elasticity = .99   #sandbox default is .9
 gral_friction   = .6   #sandbox default is .6
 #---------------------------------------------------
 
