@@ -1,20 +1,30 @@
-#simulation_on = False
+simulation_on = False
 simulation_on = True
 ##############################
 from pyphysicssandbox import *
+from pyphysicssandbox import canvas
 import drawBot
 
-#----------------
+#=================
 #General Settings:
-#----------------
-win_width = 2000
-win_height = 1000
-w,h = win_width, win_height
-window('DEMO_0', w, h, fps=30)
-#-----------------------------
-gravity(-10,300)       ###👈🏼👈🏼GRAVITY
-resistance = .95     #sandbox default is .95
-gral_elasticity = .9 #sandbox default is .9
+#=================
+#👉🏼👉🏼Canvas settings:
+#-------------------
+canvas.window_title = "A_Template"
+canvas.render_width  = 2000
+canvas.render_height = 1000
+canvas.frames_x_second = 30
+canvas.simulation_render_time = 10
+
+rw,rh = canvas.render_width, canvas.render_height
+w,h = canvas.win_width, canvas.win_height
+
+#----------------------
+#Gral physics settings:
+#----------------------
+canvas.gravity(0,350)  ###👈🏼👈🏼GRAVITY:(x,y)
+resistance(.95) #sandbox default is .95
+gral_elasticity = .9   #sandbox default is .9
 gral_friction   = .6   #sandbox default is .6
 #---------------------------------------------------
 
@@ -48,19 +58,20 @@ left_wall  = static_box((0,0), wall_w, h)
 right_wall = static_box((w-wall_w,0), wall_w, h)
 left_wall.color = wall_color
 right_wall.color = wall_color
-#### Background
-background = cosmetic_box((0, 0), w, h)
-background.color = Color("Grey")
-background.db_color = diploe_grey
+
 #### Floor or ceiling: (both use floorH:int)
 if y_limit == "floor":
-    floor      = static_box((0, h-floor_h), w, floor_h)    
+    floor      = static_box((0, rh-floor_h), rw, floor_h)    
 elif y_limit == "ceiling":
-    ceiling    = static_box((0, 0), w, floor_h)
+    ceiling    = static_box((0, 0), rw, floor_h)
 floor.color = floor_color
 
-#### DrawBot
+#### Background
+background = cosmetic_box((0, 0), rw, rh)
+background.color = Color("Grey")
+background.db_color = diploe_grey
 
+#### DrawBot Setup:
 ####------------------
 
 
@@ -72,13 +83,13 @@ floor.color = floor_color
 '''
 Setup sandbox objects here.----
 '''
-boxA=(w*.1,0,w*.8,220)
-box_a = textBox_with_font((boxA[0], boxA[1]),boxA[2],boxA[3],"my text","fonts/Diploe-BoldItalic.otf",140)
+boxA=(100,-600,1500,220)
+box_a = textBox_with_font((boxA[0], boxA[1]),boxA[2],boxA[3],"HOLA","fonts/Diploe-BoldItalic.otf",140)
 box_a.color    = Color("Yellow")
 box_a.db_color = diploe_yellow
 box_a.elasticity= gral_elasticity
 
-boxB=(w*.1,400,w*.8,220)
+boxB=(200,-300,1000,220)
 box_b = textBox_with_font((boxB[0], boxB[1]),boxB[2],boxB[3],"my text","fonts/Diploe-BoldItalic.otf",140)
 box_b.color    = Color("Yellow")
 box_b.db_color = diploe_yellow
@@ -86,4 +97,4 @@ box_b.elasticity= gral_elasticity
 
 ##------------------------------------------------------
 
-run(True)
+run(simulation_on)

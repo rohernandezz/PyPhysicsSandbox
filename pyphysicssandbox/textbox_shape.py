@@ -5,9 +5,7 @@ import math
 
 from .box_shape import Box
 from .base_shape import BaseShape
-
-render_width  = 2000
-render_height = 1000
+from pyphysicssandbox import canvas
 
 class TextBox(Box):
     def __init__(self, space, x, y, width, height, caption, font_path, font_size, mass, static, font_variations=False, cosmetic=False):
@@ -75,6 +73,9 @@ class TextBox(Box):
         screen.blit(rotated, (self.position.x-(size.width/2), self.position.y-(size.height/2)))
 
         ##👾drawBot:        
+        #render_width  = canvas.render_w
+        render_height = canvas.render_h
+        
         shifted_y = render_height-self.position.y
 
         if self.label_fs:
@@ -85,7 +86,7 @@ class TextBox(Box):
             this_label_fs.fontSize(self.font_size)
             ##### FONT VARIATIONS
             if self.font_variations:
-                print(f'aaaaa___{self.font_variations}')
+                #print(f'aaaaa___{self.font_variations}')
                 this_label_fs.fontVariations(**self.font_variations)    
             #var_slnt_value = drawBot.remap(self.position.x, 0, render_width, 0, -11)
             #var_wght_value = drawBot.remap(shifted_y, render_height, 0, 200, 600)

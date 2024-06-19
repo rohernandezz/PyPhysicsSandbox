@@ -4,12 +4,17 @@ import pymunk
 import math
 
 from .base_shape import BaseShape
+from pyphysicssandbox import canvas
 
-render_height=1000
 
 class Box(BaseShape):
     def __init__(self, space, x, y, width, height, radius, mass, static, cosmetic=False):
+        
 
+        #OFFSET x,y pygame:
+        x = x + canvas.win_margin_x
+        y = y + canvas.win_margin_y
+        
         if not cosmetic:
             moment = pymunk.moment_for_box(mass, (width, height))
 
@@ -42,6 +47,7 @@ class Box(BaseShape):
             ps += [ps[0]]
 
         ###🎨 DrawBot:
+        render_height=canvas.render_h
         this_polygon = []
         for i in ps:
             this_polygon.append((i[0],render_height-i[1]))

@@ -2,6 +2,12 @@ def to_pygame(p):
     # Converts pymunk body position into pygame coordinate tuple
     return int(p.x), int(p.y)
 
+def to_drawBot(p,canvas_height):
+    # Converts pymunk body position into drawbot coordinates, with zero at bottom left
+    x = p[0]
+    y = p[1]
+    new_y = canvas_height-y
+    return x,new_y
 
 def poly_centroid(vertices):
     centroid = [0, 0]

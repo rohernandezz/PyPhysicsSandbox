@@ -23,8 +23,10 @@ from pygame import constants
 
 __docformat__ = "reStructuredText"
 
+#REMOVED:
+#__all__ = ['window', 'add_observer', 'gravity', 'resistance', 'set_margins','color','resistance',
 
-__all__ = ['window', 'add_observer', 'gravity', 'resistance', 'mouse_clicked',
+__all__ = ['mouse_clicked', 
            'static_ball', 'ball', 'static_box', 'box', 'static_rounded_box',
            'rounded_box', 'static_polygon', 'polygon', 'static_triangle',
            'triangle', 'static_text', 'text', 'static_text_with_font',
@@ -32,14 +34,14 @@ __all__ = ['window', 'add_observer', 'gravity', 'resistance', 'mouse_clicked',
            'motor', 'pin', 'rotary_spring', 'run', 'draw', 'Color',
            'cosmetic_text', 'cosmetic_text_with_font', 'num_shapes',
            'constants', 'deactivate', 'reactivate', 'mouse_point',
-           'add_collision', 'slip_motor', 'set_margins', 'cosmetic_box',
+           'add_collision', 'slip_motor', 'cosmetic_box',
            'cosmetic_rounded_box', 'cosmetic_ball', 'cosmetic_line',
            'cosmetic_polygon', 'cosmetic_triangle', 'spring',
-           'color',
            #START CUSTOMIZATION:
            "rgb_to_normalized","normalized_to_rgb", #COLOR
            "textBox", "textBox_with_font",
            ]
+
 
 ########### FUNCTUIONS!!!!!
 def rgb_to_normalized(r, g, b, a):
@@ -73,190 +75,173 @@ def normalized_to_rgb(r, g, b, a):
 
 ###########
 
+class PhysCanvas:
+    def __init__(self, title, render_w, render_h,
+                win_margin_x=False, win_margin_y=False,
+                frames_x_second=30,
+                simulation_render_time=2,
+                time_multiplier=1,
+                print_frame_count=True,
+                drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='~/Desktop/',
+                verbose=True):
+
+        #General Settings:
+        self.window_title           = title
+        #Render Config:
+        self.drawBot_on          = drawBot_on
+        self.drawBot_save_format = drawBot_save_format
+        self.drawBot_saveFolder  = drawBot_saveFolder
+        #drawBot Render size:
+        self.render_w = render_w
+        self.render_h = render_h
+        #Animation:
+        self.frames_x_second        = frames_x_second
+        self.time_multiplier        = time_multiplier
+        self.simulation_render_time = simulation_render_time #👈🏼 in seconds
+        self.print_frame_count      = print_frame_count
+        #??? time steadyness somehow (do sine waves, etc) 
+
+        #Pygame Window Margins:
+        if win_margin_x == False:#👇🏼Default value:
+            self.win_margin_x = self.render_w / 3
+        else:
+            self.win_margin_x = win_margin_x
+        if win_margin_y == False:#👇🏼Default value:
+            self.win_margin_y = self.win_margin_x
+        else:
+            self.win_margin_y = win_margin_y
+        #Pygame Window Width:            
+        self.win_width = self.win_margin_x + self.render_w + self.win_margin_x #Margin on both sides
+        self.win_height = self.render_h + self.win_margin_y                   #Margin only on top         
+ 
+        ###SIMULATION START:
+        #Start the pymunk space
+        self.space = pymunk.Space()
+        self.space.gravity = (0.0, 500.0) #DEFAULT GRAVITY
+        self.space.damping = 0.95         #DEFAULT RESISTANCE
+        #### Simulation Behaviours:
+        self.observers = []
+        self.clicked = False
+        #### Simulation Shapes:
+        self.shapes = {}
+        #Simulation Boundaries:
+        self.x_margin = self.win_width  # simulation boundaries x
+        self.y_margin = self.win_height # simulation boundaries y
+        self.default_font_path = "fonts/Comic Sans MS.ttf"
+        self.default_font_size = 85
+
+        ###PYGAME START:
+        ### 2. Starts the pygame instance
+        pygame.init()
+        if verbose:
+            print("pygame init: 👾✅")
+        self.default_color = Color('black')
+
+        ### drawBot START:
+        ### 3. Starts a drawBot drawing:
+        print("drawbot initialized a new drawing: 🎨✅")
+        self.db_default_color = rgb_to_normalized(*self.default_color)
+
+    def add_observer(self,hook):
+        """Adds an observer function to the simulation.  Every observer
+        function is called once per time step of the simulation (roughly
+        50 times a second).  The function should be defined like this:
+
+            def function_name(keys):
+                # do something each time step
+
+        To pass a function in use the name of the function without the
+        parenthesis after it.
+
+        The observer function must take a single parameter which is a
+        list of keys pressed this step.  To see if a particular key has
+        been pressed, use something like this:
+
+                if constants.K_UP in keys:
+                    # do something based on the up arrow being pressed
+
+        :param hook: the observer function
+        :type hook: function
+
+        """
+        #global observers
+
+        self.observers.append(hook)
+        #print(f"👀 Added observer: <hook name goes here but it was crashy-crashy> 👀")
+
+    def set_margins(self,x, y):
+        """Sets the distance outside the simulation that shapes can be and remain active.
+        This defaults to the window width and height.  You can change it to either remove
+        shapes more quickly when they're out of view, or to allow creating shapes farther
+        outside the visible window.
+
+        :param x: horizontal margin
+        :param y: vertical margin
+        """
+        #global x_margin
+        #global y_margin
+
+        self.x_margin = x
+        self.y_margin = y
 
 
+    def gravity(self, x, y):
+        """Sets the direction and amount of gravity used by the simulation.
+        Positive x is to the right, positive y is downward.  This value can
+        be changed during the run of the simulation.
+
+        :param x: The horizontal gravity
+        :type x: int
+        :param y: The vertical gravity
+        :type y: int
+
+        """
+        self.space.gravity = (x, y)
 
 
+    def color(self, c):
+        """Sets the default color to use for shapes created after this
+        call.  The function may be called at any point to change the
+        color for new shapes.
+
+        To see available color names go to
+        https://sites.google.com/site/meticulosslacker/pygame-thecolors
+        and hover the mouse pointer over a color of interest.
+
+        :param c: the color name as a string
+        :type c: str
+        """
+        #global default_color
+        self.default_color = Color(c)
+
+    def resistance(self, v):
+        """Sets the amount of velocity that all objects lose each second.
+        This can be used to simulate air resistance.  Resistance value
+        defaults to 1.0.  Values less than 1.0 cause objects to lose
+        velocity over time, values greater than 1.0 cause objects to
+        gain velocity over time.
+
+        For example a value of .9 means the body will lose 10% of its
+        velocity each second (.9 = 90% velocity retained each second).
+
+        This value can be changed during the run of the simulation.
+
+        :param v: The resistance value
+        :type v: float
+
+        """
+        self.space.damping = v
 
 
-##👉🏼START THE SIMULATION THING
-##-------- SHOULD I START AN OBJECT HERE LATER???????
-## DEFFAULT SETTINGS GO HERE:
+####INITIALIZE THE canvas AND space OBJECTS:
+canvas = PhysCanvas("title", 2000, 1000)
+space  = canvas.space
+####........................................
 
-### 1. Starts the pymunk space and sets physics defaults:
-space = pymunk.Space()
-space.gravity = (0.0, 500.0) #DEFAULT GRAVITY
-space.damping = 0.95         #DEFAULT RESISTANCE
-#### Simulation Behaviours:
-observers = []
-clicked = False
-#### Simulation Shapes:
-shapes = {}
-
-
-#### General Settings:
-win_title = "Untitled"
-win_width = 1000
-win_height = 1000
-x_margin = win_width  # simulation boundaries x
-y_margin = win_height # simulation boundaries y
-default_font_path = "fonts/Comic Sans MS.ttf"
-default_font_size = 85
-
-# general_settings = {
-#                      "win_title"  : win_title,
-#                      "win_width"  : win_width,
-#                      "win_height" : win_height,
-#                      "a" : "a",
-# }
-
-### 2. Starts the pygame instance
-pygame.init()
-#print("pygame init: 👾✅")
-default_color = Color('black')
-
-### 3. Starts a drawBot drawing:
-print("drawbot initialized a new drawing: 🎨✅")
-db_default_color = rgb_to_normalized(*default_color)
-
-### RENDER CONFIGURATIONS:
-drawBot_on = True
-drawBot_save_format = "mp4"
-drawBot_saveFolder  = "~/Desktop/"
-
-db_canvas_w = win_width 
-db_canvas_h = win_height
-
-####Animation:
-frames_x_second = 30
-time_multiplier = 1
-simulation_render_time = 10 #👈🏼 in seconds
-print_frame_count = True
-# time steadyness somehow (do sine waves, etc) 
-
-def window(title, width, height, fps=frames_x_second):
-    """Sets the caption, width, and height of the window that will
-    appear when run () is executed.
-
-    :param title: the caption of the window
-    :type title: string
-    :param width: the width of the window in pixels
-    :type width: int
-    :param height: the height of the window in pixels
-    :type height: int
-
-    :param fps: fractions of 1 second to move the simulation forward (aka FPS in drawBot🎨)
-    :type fps: int
-    """
-    global win_title
-    global win_width
-    global win_height
-    global x_margin
-    global y_margin
-    global frames_x_second 
-
-    win_title = title
-    win_width = width
-    win_height = height
-    x_margin = win_width
-    y_margin = win_height   
-    frames_x_second = fps
-
-
-def add_observer(hook):
-    """Adds an observer function to the simulation.  Every observer
-    function is called once per time step of the simulation (roughly
-    50 times a second).  The function should be defined like this:
-
-        def function_name(keys):
-            # do something each time step
-
-    To pass a function in use the name of the function without the
-    parenthesis after it.
-
-    The observer function must take a single parameter which is a
-    list of keys pressed this step.  To see if a particular key has
-    been pressed, use something like this:
-
-            if constants.K_UP in keys:
-                # do something based on the up arrow being pressed
-
-    :param hook: the observer function
-    :type hook: function
-
-    """
-    global observers
-
-    observers.append(hook)
-
-
-def set_margins(x, y):
-    """Sets the distance outside the simulation that shapes can be and remain active.
-    This defaults to the window width and height.  You can change it to either remove
-    shapes more quickly when they're out of view, or to allow creating shapes farther
-    outside the visible window.
-
-    :param x: horizontal margin
-    :param y: vertical margin
-    """
-    global x_margin
-    global y_margin
-
-    x_margin = x
-    y_margin = y
-
-
-def gravity(x, y):
-    """Sets the direction and amount of gravity used by the simulation.
-    Positive x is to the right, positive y is downward.  This value can
-    be changed during the run of the simulation.
-
-    :param x: The horizontal gravity
-    :type x: int
-    :param y: The vertical gravity
-    :type y: int
-
-    """
-    space.gravity = (x, y)
-
-
-def color(c):
-    """Sets the default color to use for shapes created after this
-    call.  The function may be called at any point to change the
-    color for new shapes.
-
-    To see available color names go to
-    https://sites.google.com/site/meticulosslacker/pygame-thecolors
-    and hover the mouse pointer over a color of interest.
-
-    :param c: the color name as a string
-    :type c: str
-    """
-    global default_color
-
-    default_color = Color(c)
-
-
-def resistance(v):
-    """Sets the amount of velocity that all objects lose each second.
-    This can be used to simulate air resistance.  Resistance value
-    defaults to 1.0.  Values less than 1.0 cause objects to lose
-    velocity over time, values greater than 1.0 cause objects to
-    gain velocity over time.
-
-    For example a value of .9 means the body will lose 10% of its
-    velocity each second (.9 = 90% velocity retained each second).
-
-    This value can be changed during the run of the simulation.
-
-    :param v: The resistance value
-    :type v: float
-
-    """
-    space.damping = v
-
+####START OF NON OBJECT FUNCTIONS:
 
 def mouse_clicked():
+    #👆🏼maybe put in canvas
     """Returns True if the mouse has been clicked this time step. Usable only in an observer function.
 
     :rtype: bool
@@ -266,6 +251,7 @@ def mouse_clicked():
 
 
 def mouse_point():
+    #👆🏼maybe put in canvas
     """Returns the current location of the mouse pointer.
 
     If the mouse is out of the simulation window, this will return the last location of the mouse
@@ -388,8 +374,8 @@ def _box(p, width, height, mass, static, radius=0, cosmetic=False):
     y = p[1] + height / 2
 
     result = Box(space, x, y, width, height, radius, mass, static, cosmetic)
-    result.color = default_color
-    shapes[result.collision_type] = result
+    result.color = canvas.default_color
+    canvas.shapes[result.collision_type] = result
 
     return result
 
@@ -707,8 +693,8 @@ def _textBox_with_font(       p, width, height, caption, font_path, font_size, m
     y = p[1] + height / 2
 
     result = TextBox(space, x, y, width, height, caption, font_path, font_size, mass, static, font_variations, cosmetic)
-    result.color = default_color
-    shapes[result.collision_type] = result
+    result.color = canvas.default_color
+    canvas.shapes[result.collision_type] = result
 
     return result
 
@@ -777,7 +763,7 @@ def _text_with_font(p, caption, font, size, mass, static, cosmetic=False):
         mass = 10 * len(caption)
 
     result = Text(space, p[0], p[1], caption, font, size, mass, static, cosmetic)
-    result.color = default_color
+    result.color = canvas.default_color
     shapes[result.collision_type] = result
 
     return result
@@ -837,7 +823,7 @@ def _line(p1, p2, thickness, mass, static, cosmetic=False):
         mass = math.sqrt(math.pow(p1[0]-p2[0], 2)+math.pow(p1[1]-p2[1], 2))*thickness
 
     result = Line(space, p1, p2, thickness, mass, static, cosmetic)
-    result.color = default_color
+    result.color = canvas.default_color
     shapes[result.collision_type] = result
 
     return result
@@ -899,7 +885,7 @@ def motor(shape1, speed=5):
     from .motor_joint import Motor
 
     result = Motor(space, shape1, speed)
-    result.color = default_color
+    result.color = self.default_color
     shapes[result.collision_type] = result
 
     return result
@@ -924,7 +910,7 @@ def pin(p1, shape1, p2, shape2):
     from .pin_joint import Pin
 
     result = Pin(space, p1, shape1, p2, shape2)
-    result.color = default_color
+    result.color = self.default_color
     shapes[result.collision_type] = result
 
     return result
@@ -958,7 +944,7 @@ def spring(p1, shape1, p2, shape2, length, stiffness, damping):
     p2 = (p2[0]-shape2.position[0], p2[1]-shape2.position[1])
 
     result = Spring(space, p1, shape1, p2, shape2, length, stiffness, damping)
-    result.color = default_color
+    result.color = self.default_color
     shapes[result.collision_type] = result
 
     return result
@@ -990,7 +976,7 @@ def slip_motor(shape1, shape2, rest_angle, stiffness, damping, slip_angle, speed
     from .slip_motor import SlipMotor
 
     result = SlipMotor(space, shape1, shape2, rest_angle, stiffness, damping, slip_angle, speed)
-    result.color = default_color
+    result.color = self.default_color
     shapes[result.collision_type] = result
 
     return result
@@ -1019,7 +1005,7 @@ def rotary_spring(shape1, shape2, angle, stiffness, damping):
     from .rotary_spring import RotarySpring
 
     result = RotarySpring(space, shape1, shape2, angle, stiffness, damping)
-    result.color = default_color
+    result.color = self.default_color
     shapes[result.collision_type] = result
 
     return result
@@ -1090,16 +1076,16 @@ def _calc_margins():
     global x_margin
     global y_margin
 
-    for shape in shapes:
-        x, y = shapes[shape].position
+    for shape in canvas.shapes:
+        x, y = canvas.shapes[shape].position
         x = abs(x)
         y = abs(y)
 
-        if x_margin < x:
-            x_margin = x
+        if canvas.x_margin < x:
+            canvas.x_margin = x
 
-        if y_margin < y:
-            y_margin = y
+        if canvas.y_margin < y:
+            canvas.y_margin = y
 
 
 def run(do_physics=True):
@@ -1113,6 +1099,7 @@ def run(do_physics=True):
     :type do_physics: bool
     """
     global clicked
+    #👆🏼This probably is wrong, the whole "clicked" thing
 
     _calc_margins()
     
@@ -1123,12 +1110,12 @@ def run(do_physics=True):
 
 
     #screen is for 👾 pyGame:
-    screen = pygame.display.set_mode((win_width, win_height))
-    pygame.display.set_caption(win_title)
+    screen = pygame.display.set_mode((canvas.win_width, canvas.win_height))
+    pygame.display.set_caption(canvas.window_title)
     clock = pygame.time.Clock()
     running = True
     frame_count = 0
-    max_frames = simulation_render_time * frames_x_second
+    max_frames = canvas.simulation_render_time * canvas.frames_x_second
 
     while running:
         keys = []
@@ -1144,7 +1131,7 @@ def run(do_physics=True):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 clicked = True
 
-        for observer in observers:
+        for observer in canvas.observers:
             observer(keys)
 
     #### Setup a new frame to draw on:
@@ -1152,25 +1139,26 @@ def run(do_physics=True):
         screen.fill((255, 255, 255))
 
         ###🎨 DrawBot:
-        drawBot.newPage(win_width, win_height)
-        drawBot.frameDuration(1/frames_x_second)
+        drawBot.newPage(canvas.render_w, canvas.render_h)
+        drawBot.frameDuration(1/canvas.frames_x_second)
+        drawBot.translate(-canvas.win_margin_x,canvas.win_margin_y)
     #/#/#/#/
 
         # Should automatically remove any shapes that are
         # far enough below the bottom edge of the window
         # that they won't be involved in anything visible
         shapes_to_remove = []
-        for collision_type, shape in shapes.items():
-            if shape.position.x > win_width + x_margin:
+        for collision_type, shape in canvas.shapes.items():
+            if shape.position.x > canvas.win_width + canvas.x_margin:
                 shapes_to_remove.append(shape)
 
-            if shape.position.x < -x_margin:
+            if shape.position.x < -canvas.x_margin:
                 shapes_to_remove.append(shape)
 
-            if shape.position.y > win_height + y_margin:
+            if shape.position.y > canvas.win_height + canvas.y_margin:
                 shapes_to_remove.append(shape)
 
-            if shape.position.y < -y_margin:
+            if shape.position.y < -canvas.y_margin:
                 shapes_to_remove.append(shape)
 
         for shape in shapes_to_remove:
@@ -1178,34 +1166,34 @@ def run(do_physics=True):
 
         # Also adjust positions for any shapes that are supposed
         # to wrap and have gone off an edge of the screen.
-        for collision_type, shape in shapes.items():
+        for collision_type, shape in canvas.shapes.items():
             if shape.wrap_x:
                 if shape.position.x < 0:
-                    shape.position = (win_width - 1, shape.position.y)
+                    shape.position = (canvas.win_width - 1, shape.position.y)
 
-                if shape.position.x >= win_width:
+                if shape.position.x >= canvas.win_width:
                     shape.position = (0, shape.position.y)
 
             if shape.wrap_y:
                 if shape.position.y < 0:
-                    shape.position = (shape.position.x, win_height - 1)
+                    shape.position = (shape.position.x, canvas.win_height - 1)
 
-                if shape.position.y >= win_height:
+                if shape.position.y >= canvas.win_height:
                     shape.position = (shape.position.x, 0)
 
         # Now draw the shapes that are left
-        for collision_type, shape in shapes.items():
+        for collision_type, shape in canvas.shapes.items():
             shape.draw(screen)
 
         if do_physics:
-            space.step( 1 / frames_x_second * time_multiplier ) # simulation step forward time in fractions of a second (aka FPS?🤔) 
+            space.step( 1 / canvas.frames_x_second * canvas.time_multiplier ) # simulation step forward time in fractions of a second (aka FPS?🤔) 
 
         ####👾 pygame:
         pygame.display.flip()
-        clock.tick(1/frames_x_second*1000)#👈🏼 pygame.clock is in milliseconds so it's 1/frames_x_second * 1000
+        clock.tick(1/canvas.frames_x_second*1000)#👈🏼 pygame.clock is in milliseconds so it's 1/frames_x_second * 1000
 
         frame_count += 1
-        if print_frame_count:
+        if canvas.print_frame_count:
             print(f"frame_count:{frame_count}")
 
         if frame_count >= max_frames:
@@ -1216,10 +1204,10 @@ def run(do_physics=True):
     #print("pygame quit: 👾⛔️")
 
     ###🎨 DrawBot:
-    if drawBot_on:
+    if canvas.drawBot_on:
         print(f"💃🏻 drawBot Render ON 💃🏻")
         
-        save_path = f"{drawBot_saveFolder}{win_title}_drawBotOutput.{drawBot_save_format}"
+        save_path = f"{canvas.drawBot_saveFolder}{canvas.window_title}_drawBotOutput.{canvas.drawBot_save_format}"
         drawBot.saveImage(save_path)
         print(f"Saved drawBot drawing to: {save_path}")
     else:

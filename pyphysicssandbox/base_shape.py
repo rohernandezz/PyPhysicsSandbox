@@ -3,10 +3,9 @@ import pymunk
 import math
 
 from pyphysicssandbox import pin
-from pyphysicssandbox import win_width
-from pyphysicssandbox import win_height
-from pyphysicssandbox import space
-from pyphysicssandbox import add_observer
+#from pyphysicssandbox import win_width
+#from pyphysicssandbox import win_height
+from pyphysicssandbox import canvas, space
 
 from pyphysicssandbox import rgb_to_normalized
 
@@ -34,6 +33,9 @@ class BaseShape:
         self._debug = False
         self.custom_velocity_func = False
 
+        self.win_width  = canvas.win_width
+        self.win_height = canvas.win_height
+
         #drawBot
         self._db_color = rgb_to_normalized(*self._color)
 
@@ -46,7 +48,7 @@ class BaseShape:
         else:
             self.shape.collision_type = BaseShape.next_collision_type
 
-        add_observer(self.observer)
+        canvas.add_observer(self.observer)
 
     def observer(self, keys):
         if self._debug:
@@ -62,7 +64,7 @@ class BaseShape:
         return not self._cosmetic
 
     def inside(self, p):
-        mask = pygame.Surface((win_width, win_height))
+        mask = pygame.Surface((self.win_width, self.win_height))
         color = self.color
         self.color = pygame.Color('white')
         self._draw(mask)
