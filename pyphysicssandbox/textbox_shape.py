@@ -75,9 +75,8 @@ class TextBox(Box):
 
         ##👾drawBot:        
         #render_width  = canvas.render_w
-        render_height = canvas.render_h
         
-        shifted_y = render_height-self.position.y
+        shifted_y = canvas.render_height-self.position.y
 
         if self.label_fs:
             this_label_fs = self.label_fs
@@ -98,7 +97,7 @@ class TextBox(Box):
             this_label_fs.append(self.caption)
 
         with drawBot.savedState():
-            drawBot.rotate(degrees, center=(self.x, render_height-self.y))
+            drawBot.rotate(degrees, center=(self.x, canvas.render_height-self.y))
             #drawBot.translate(-self.width/2,-self.height/2) #Go back to 0,0 
             
             with drawBot.savedState():    

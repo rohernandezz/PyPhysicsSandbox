@@ -47,10 +47,9 @@ class Box(BaseShape):
             ps += [ps[0]]
 
         ###🎨 DrawBot:
-        render_height=canvas.render_h
         this_polygon = []
         for i in ps:
-            this_polygon.append((i[0],render_height-i[1]))
+            this_polygon.append((i[0],canvas.render_height-i[1]))
 
         with drawBot.savedState():
             drawBot.fill(*self.db_color)

@@ -92,8 +92,8 @@ class PhysCanvas:
         self.drawBot_save_format = drawBot_save_format
         self.drawBot_saveFolder  = drawBot_saveFolder
         #drawBot Render size:
-        self.render_w = render_w
-        self.render_h = render_h
+        self.render_width = render_w
+        self.render_height = render_h
         #Animation:
         self.frames_x_second        = frames_x_second
         self.time_multiplier        = time_multiplier
@@ -103,7 +103,7 @@ class PhysCanvas:
 
         #Pygame Window Margins:
         if win_margin_x == False:#👇🏼Default value:
-            self.win_margin_x = self.render_w / 3
+            self.win_margin_x = self.render_width / 3
         else:
             self.win_margin_x = win_margin_x
         if win_margin_y == False:#👇🏼Default value:
@@ -111,8 +111,8 @@ class PhysCanvas:
         else:
             self.win_margin_y = win_margin_y
         #Pygame Window Width:            
-        self.win_width = self.win_margin_x + self.render_w + self.win_margin_x #Margin on both sides
-        self.win_height = self.render_h + self.win_margin_y                   #Margin only on top         
+        self.win_width = self.win_margin_x + self.render_width + self.win_margin_x #Margin on both sides
+        self.win_height = self.render_height + self.win_margin_y                   #Margin only on top         
  
         ###SIMULATION START:
         #Start the pymunk space
@@ -141,6 +141,26 @@ class PhysCanvas:
         ### 3. Starts a drawBot drawing:
         print("drawbot initialized a new drawing: 🎨✅")
         self.db_default_color = rgb_to_normalized(*self.default_color)
+
+        #Updateable render width
+        @property
+        def render_width(self):
+            return self._render_width
+        
+        @render_width.setter
+        def render_width(self, value):
+            self._render_width = value
+            self.win_width = self.win_margin_x + self.render_width + self.win_margin_x #Margin on both sides
+
+        @property
+        def render_height(self):
+            return self._render_height
+
+        @render_height.setter
+        def render_height(self, value):
+            self._render_height = value
+            self.win_height = self.win_height = self.render_height + self.win_margin_y
+
 
     def add_observer(self,hook):
         """Adds an observer function to the simulation.  Every observer
@@ -234,6 +254,9 @@ class PhysCanvas:
 
 
 ####INITIALIZE THE canvas AND space OBJECTS:
+
+####CHANGE THIS TO INIT THE OBJECT IN EVERY SCRIPT; WITH APPROTIPTRIATE DIMENSIONS AND TITLE;
+    #Will also need to change references inside objects, but we can update them to take the canvas, and therefore the canvas.space
 canvas = PhysCanvas("title", 2000, 1000)
 space  = canvas.space
 ####........................................
@@ -1110,6 +1133,8 @@ def run(do_physics=True):
 
 
     #screen is for 👾 pyGame:
+    print(f"🤬 {(canvas.win_width, canvas.win_height)}")
+    print(f"🤬🤬 {(canvas.render_width, canvas.render_height)}")
     screen = pygame.display.set_mode((canvas.win_width, canvas.win_height))
     pygame.display.set_caption(canvas.window_title)
     clock = pygame.time.Clock()
@@ -1139,7 +1164,7 @@ def run(do_physics=True):
         screen.fill((255, 255, 255))
 
         ###🎨 DrawBot:
-        drawBot.newPage(canvas.render_w, canvas.render_h)
+        drawBot.newPage(canvas.render_width, canvas.render_height)
         drawBot.frameDuration(1/canvas.frames_x_second)
         drawBot.translate(-canvas.win_margin_x,canvas.win_margin_y)
     #/#/#/#/
