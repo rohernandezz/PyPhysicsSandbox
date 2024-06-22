@@ -23,7 +23,7 @@ w,h = canvas.win_width, canvas.win_height
 #Gral physics settings:
 #----------------------
 canvas.gravity(0,150)  ###👈🏼👈🏼GRAVITY:(x,y)
-resistance(.95) #sandbox default is .95
+canvas.resistance(.95) #sandbox default is .95
 gral_elasticity = .99   #sandbox default is .9
 gral_friction   = .6   #sandbox default is .6
 #---------------------------------------------------

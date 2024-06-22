@@ -132,7 +132,9 @@ class TextBox(Box):
                 with drawBot.savedState():
                     #drawBot.translate(origin_x+self.width/2,origin_y)
                     drawBot.fill(*self.db_color)
-                    drawBot.text(this_label_fs,(origin_x,origin_y+_h*.22))
+                    hardcoded_baseline_offset = _h*.22#HACKING BASELINE OFFSET HERE, HARDCODED👈🏼
+                    drawBot.translate(origin_x,origin_y+hardcoded_baseline_offset)
+                    drawBot.text(this_label_fs,(0,0)) 
                     #print(f"the_string: {this_label_fs}")
                     #print(f"😎Rect: {db_text_rect}")
 
