@@ -345,6 +345,22 @@ class BaseShape:
         else:
             print("Group value must be an integer")
 
+    @property
+    def category(self):
+        if type(self.shape) is list:
+            return self.shape[0].filter.categories
+
+        return self.shape.filter.categories
+
+    @category.setter
+    def category(self, value):
+        if type(self.shape) is list:
+            for shape in self.shape:
+                shape.filter = pymunk.ShapeFilter(categories=value,mask=value)
+        else:
+            self.shape.filter = pymunk.ShapeFilter(categories=value,mask=value)
+
+
     def _check_velocity_func(self):
         if not self.custom_velocity_func:
             self.custom_velocity_func = True

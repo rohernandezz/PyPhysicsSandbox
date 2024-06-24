@@ -1,3 +1,4 @@
+box_stroke_on = True
 box_stroke_on = False
 import drawBot
 import pygame

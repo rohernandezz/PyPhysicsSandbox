@@ -1,11 +1,14 @@
 simulation_on = False
 simulation_on = True
 ##############################
+#from importlib import reload
+
+#import FS_Tools
+#reload(FS_Tools)
+from FS_Tools import make_fs, add_counter_and_make_fs, fallingParagraph
+
 from pyphysicssandbox import *
 from pyphysicssandbox import canvas
-
-from FS_Tools import make_fs, add_counter_and_make_fs, fallingParagraph
-import drawBot as db
 
 #=================
 #General Settings:
@@ -15,8 +18,8 @@ import drawBot as db
 canvas.window_title = "1H_Falling_Paragraphs_02"
 canvas.render_width  = 2000
 canvas.render_height = 1000
-canvas.frames_x_second = 60
-canvas.simulation_render_time = 10
+canvas.frames_x_second = 30
+canvas.simulation_render_time = 15
 #Default canvas color:
 canvas.color("Green")
 
@@ -79,64 +82,15 @@ background.db_color = diploe_grey
 
 #### DrawBot
 
-########## FUNCTIONS:
-def make_fs(string,font_path,font_size,font_variations=None,lineHeight=None):
-    f = db.FormattedString()
-    f.font(font_path)
-    #f.align('left')
-    f.fontSize(font_size)
-    if font_variations:
-        f.fontVariations(**font_variations)
-    if not lineHeight:
-        lineHeight = font_size*0.90
-    f.lineHeight(lineHeight) 
-    f+=string
-    return f
-
-def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, font_variations=None, line_angle=0):    
-    my_shapes = {}    
-    if font_variations:
-        the_fontVariations = font_variations
-
-    #####Make a rect for every line
-    for i, bounds in enumerate(db.textBoxCharacterBounds(fs_by_lines, text_box)):
-        x, y, w, h = bounds.bounds 
-        print(f"🤪({bounds.bounds}")
-        #this_baselineOffset = bounds.baselineOffset
-        path = db.BezierPath()            
-        path.text(bounds.formattedSubString)
-        if path.bounds():
-            _x, _y, _w, _h = path.bounds()
-        else:
-            _x, _y, _w, _h = 0,0,0,0
-        add_X,add_Y = x,y
-        if path.bounds()== None:
-            minx, miny, maxx, maxy = 0,0,1,1
-        else:   
-            minx, miny, maxx, maxy = path.bounds()
-        letter_rect = (add_X, add_Y + maxy -_y, maxx - minx, maxy- miny)
-    ## Simulation Objects make:
-        the_string = str(bounds.formattedSubString)
-        #print(f"the_string: {the_string}")
-        my_shapes[i]= ((letter_rect[0],canvas.win_height-letter_rect[1]),
-                        textBox_with_font((letter_rect[0],canvas.win_height-letter_rect[1]),letter_rect[2],letter_rect[3],
-                                          the_string,font_path,font_size,font_variations=font_variations))
-        my_shapes[i][1].color=Color(color_name)
-        my_shapes[i][1].angle=line_angle
-
-    return my_shapes
-
-
-##########////FUNCTIONS
 ####------------------
 
 the_font_path = "fonts/VF/DiploeVF.ttf" 
 the_font_size = 42
 text_color_name = "Black"
 
-text_box_A = (1100, 1000, 800, 700)
-the_text_A = "Uprootedness occurs whenever there is a military conquest, and in this sense conquest is nearly always an evil. There is the minimum of uprootedness when the conquerors are migrants who settle down in the conquered country, intermarry with the inhabitants and take root themselves. Such was the case with the Hellenes in Greece, the Celts in Gaul and the Moors in Spain. But when the conqueror remains a stranger in the land of which he has taken possession, uprootedness becomes an almost mortal disease among the subdued population. It reaches its most acute stage when there are deportations on a massive scale, as in Europe under the German occupation, or along the upper loop of the Niger, or where there is any brutal suppression of all local traditions, as in the French possessions in the Pacific (if Gauguin and Alain Gerbault are to be believed)."
-the_text_A = the_text_A
+text_box_A = (1000, 0, 1000, 500)
+the_text_A = "To be rooted is perhaps the most important and least recognized need of the human soul. It is one of the hardest to define. A human being has roots by virtue of his real, active and natural participation in the life of a community which preserves in living shape certain particular treasures of the past and certain particular expectations for the future. This participation is a natural one, in the sense that it is automatically brought about by place, conditions of birth, profession and social surroundings. Every human being needs to have multiple roots. It is necessary for him to draw wellnigh the whole of his moral, intellectual and spiritual life by way of the environment of which he forms a natural part."
+the_text_A = the_text_A*2
 the_fontVariations_A ={"wdth":80,"wght":400,"slnt":0}
 fs_w_counter_A = make_fs(the_text_A, the_font_path, the_font_size, font_variations=the_fontVariations_A, lineHeight=the_font_size*1.1)
 
@@ -147,9 +101,7 @@ the_text_B = the_text_B+the_text_B
 the_fontVariations_B ={"wdth":30,"wght":200,"slnt":-11}
 fs_w_counter_B = make_fs(the_text_B, the_font_path, the_font_size, font_variations=the_fontVariations_B, lineHeight=the_font_size*1.1)
 
-
-
-fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=-1)
-fallingParagraph(fs_w_counter_B, text_box_B, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_B,line_angle=5)
+fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=0,keep_first_height=True)
+#fallingParagraph(fs_w_counter_B, text_box_B, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_B,line_angle=5)
 
 run(simulation_on)

@@ -1,3 +1,5 @@
+from pyphysicssandbox import *
+from pyphysicssandbox import canvas
 import drawBot as db
 
 def make_fs(string,font_path,font_size,font_variations=None,lineHeight=None):
@@ -28,37 +30,53 @@ def add_counter_and_make_fs(string,font_path,font_size,font_variations=None,line
     return f
 
 
-def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, font_variations=None, line_angle=0):    
-    my_shapes = {}    
-    if font_variations:
-        the_fontVariations = font_variations
+def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, font_variations=None, line_angle=0, keep_first_height=False):
+    my_shapes = {}   
+    
 
     #####Make a rect for every line
+    #print(f"🤓text_box-orig:{text_box}")
+    text_box = (text_box[0],canvas.render_height-text_box[1]-text_box[3], text_box[2],text_box[3])#👈🏼convert pysics coords TO drawBot COORDS
     for i, bounds in enumerate(db.textBoxCharacterBounds(fs_by_lines, text_box)):
-        x, y, w, h = bounds.bounds 
-        print(f"🤪({bounds.bounds}")
-        this_baselineOffset = bounds.baselineOffset
-        path = db.BezierPath()            
-        path.text(bounds.formattedSubString)
+        x, y, w, h = bounds.bounds #👈🏼drawBot coords
+        #print(f"🤓text_box-new:{text_box}")
+        #print(f"😎{bounds.bounds}")
+        add_y = y+h#👈🏼add height to Y because pyhsics draws from the other side
+        letter_rect = (x,add_y,w,h)
+        ####FOR RECT bounding the actual paths:
+        #print(f"🤪({bounds.bounds}")
+        #if keep_first_height:
+        #    if i == 0:
+        #        print(f"😳 SASDFASDF")
+        #        first_line_height = h
+        #    h = first_line_height
+        #this_baselineOffset = bounds.baselineOffset
+        #print(f"🤪🤪🤪({this_baselineOffset}")
+        ###Para las cajas de cada subparte
+        #path = db.BezierPath()            
+        #path.text(bounds.formattedSubString)
+        #add_X = x
+        #add_Y = y+this_baselineOffset
 
-        
-        add_X = x
-        add_Y = y+this_baselineOffset
-
-        if path.bounds():
-            minx, miny, maxx, maxy = path.bounds()
-        else:
-            print("noBounds")
-
-        letter_rect = (add_X, add_Y+ maxy -miny, maxx - minx, maxy- miny)
+        #if path.bounds():
+            #minx, miny, maxx, maxy = path.bounds()
+        #else:
+        #    print("noBounds")
+        #letter_rect = (add_X, add_Y+ maxy -miny, maxx - minx, maxy- miny)
 
     ## Simulation Objects make:
         the_string = str(bounds.formattedSubString)
         #print(f"the_string: {the_string}")
-        my_shapes[i]= ((letter_rect[0],canvas.win_height-letter_rect[1]),
-                        textBox_with_font((letter_rect[0],canvas.win_height-letter_rect[1]),letter_rect[2],letter_rect[3],
+        #print(f"y: {y}")
+        #print(f"👹👹canvas.render_height: {canvas.render_height}")
+
+        new_y = canvas.render_height-letter_rect[1]#👈🏼convert drawBot coords TO PHYSICS COORDS
+        new_p = (letter_rect[0],new_y)
+        #new_y = y
+        #print(f"🦋 {new_y}")
+        my_shapes[i]= (new_p,
+                        textBox_with_font(new_p,letter_rect[2],letter_rect[3],
                                           the_string,font_path,font_size,font_variations=font_variations))
         my_shapes[i][1].color=Color(color_name)
         my_shapes[i][1].angle=line_angle
-
     return my_shapes

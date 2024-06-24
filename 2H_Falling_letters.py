@@ -4,7 +4,12 @@ simulation_on = True
 from pyphysicssandbox import *
 from pyphysicssandbox import canvas
 
+from importlib import reload
+
+import FS_Tools
+reload(FS_Tools)
 from FS_Tools import make_fs, add_counter_and_make_fs, fallingParagraph
+
 import drawBot as db
 
 #=================
@@ -12,11 +17,11 @@ import drawBot as db
 #=================
 #👉🏼👉🏼Canvas settings:
 #-------------------
-canvas.window_title = "1H_Falling_Paragraphs_02"
+canvas.window_title = "2H_Falling_LEtters"
 canvas.render_width  = 2000
 canvas.render_height = 1000
-canvas.frames_x_second = 60
-canvas.simulation_render_time = 10
+canvas.frames_x_second = 30
+canvas.simulation_render_time = 12
 #Default canvas color:
 canvas.color("Green")
 
@@ -59,10 +64,17 @@ diploe_black  = rgb_to_normalized(230,228,102,255)
 ####----------------------------------------
 
 ### Physicsiphy world:
-left_wall  = static_box((0,0), wall_w, rh)
-right_wall = static_box((rw-wall_w,0), wall_w, rh)
-left_wall.color = wall_color
-right_wall.color = wall_color
+
+#### Background
+background = cosmetic_box((0, 0), rw, rh)
+background.color = Color("Grey")
+background.db_color = diploe_grey
+
+#Walls
+#left_wall  = static_box((0,0), wall_w, rh)
+#right_wall = static_box((rw-wall_w,0), wall_w, rh)
+#left_wall.color = wall_color
+#right_wall.color = wall_color
 
 #### Floor or ceiling: (both use floorH:int)
 if y_limit == "floor":
@@ -71,16 +83,12 @@ elif y_limit == "ceiling":
     ceiling    = static_box((0, 0), rw, floor_h)
 floor.color = floor_color
 
-#### Background
-background = cosmetic_box((0, 0), rw, rh)
-background.color = Color("Grey")
-background.db_color = diploe_grey
 
 
 #### DrawBot
 
 ########## FUNCTIONS:
-def make_fs(string,font_path,font_size,font_variations=None,lineHeight=None):
+def make_fsLOCAL(string,font_path,font_size,font_variations=None,lineHeight=None):
     f = db.FormattedString()
     f.font(font_path)
     f.fontSize(font_size)
@@ -92,7 +100,7 @@ def make_fs(string,font_path,font_size,font_variations=None,lineHeight=None):
     f+=string
     return f
 
-def add_counter_and_make_fs(string,font_path,font_size,font_variations=None,lineHeight=None):
+def add_counter_and_make_fsLOCAL(string,font_path,font_size,font_variations=None,lineHeight=None):
     f = db.FormattedString()
     f.font(font_path)
     f.fontSize(font_size)
@@ -108,7 +116,7 @@ def add_counter_and_make_fs(string,font_path,font_size,font_variations=None,line
     return f
 
 
-def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, font_variations=None, line_angle=0):    
+def fallingParagraphLOCAL(fs_by_lines, text_box, color_name, font_path, font_size, font_variations=None, line_angle=0):    
     my_shapes = {}    
     if font_variations:
         the_fontVariations = font_variations
@@ -148,20 +156,13 @@ def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, fo
 ####------------------
 
 the_font_path = "fonts/VF/DiploeVF.ttf" 
-the_font_size = 42
+the_font_size = 160
 text_color_name = "Black"
 
-text_box_A = (400, 800, 800, 700)
+text_box_A = (400, 100, 1000, 700)
 the_text_A = "Uprootedness is a thing"
 the_fontVariations_A ={"wdth":80,"wght":400,"slnt":0}
 fs_w_counter_A = add_counter_and_make_fs(the_text_A, the_font_path, the_font_size, font_variations=the_fontVariations_A, lineHeight=the_font_size*1.1)
-
-
-text_box_B = (120, 800, 500, 700)
-the_text_B = "To be rooted is"
-the_fontVariations_B ={"wdth":30,"wght":200,"slnt":-11}
-fs_w_counter_B = make_fs(the_text_B, the_font_path, the_font_size, font_variations=the_fontVariations_B, lineHeight=the_font_size*1.1)
-
 
 
 fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=-1)

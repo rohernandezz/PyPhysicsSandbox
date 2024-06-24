@@ -1133,8 +1133,8 @@ def run(do_physics=True):
 
 
     #screen is for 👾 pyGame:
-    print(f"🤬 {(canvas.win_width, canvas.win_height)}")
-    print(f"🤬🤬 {(canvas.render_width, canvas.render_height)}")
+    #print(f"🤬 {(canvas.win_width, canvas.win_height)}")
+    #print(f"🤬🤬 {(canvas.render_width, canvas.render_height)}")
     screen = pygame.display.set_mode((canvas.win_width, canvas.win_height))
     pygame.display.set_caption(canvas.window_title)
     clock = pygame.time.Clock()
