@@ -12,7 +12,7 @@ import drawBot as db
 #=================
 #👉🏼👉🏼Canvas settings:
 #-------------------
-canvas.window_title = "4V_Lines_"
+canvas.window_title = "3V_Falling_A"
 canvas.render_width  = 1080
 canvas.render_height = 1920
 canvas.frames_x_second = 60
@@ -26,7 +26,7 @@ w,h = canvas.win_width, canvas.win_height
 #----------------------
 #Gral physics settings:
 #----------------------
-gral_gravity=(0,400)
+gral_gravity=1,50
 canvas.gravity(*gral_gravity)  ###👈🏼👈🏼GRAVITY:(x,y)
 canvas.resistance(.95) #sandbox default is .95
 gral_elasticity = .99   #sandbox default is .9
@@ -78,7 +78,7 @@ elif y_limit == "ceiling":
 elif y_limit == "both":
     floor      = static_box((0, rh-floor_h), rw, floor_h)    
     ceiling    = static_box((0, 0), rw, floor_h)
-    #ceiling.category = cat2
+    ceiling.category = cat2
 floor.color   = floor_color
 
 #### Background
@@ -89,7 +89,7 @@ background.db_color = diploe_yellow
 #### DrawBot
 
 ########## FUNCTIONS:
-def make_fs_local(string,font_path,font_size,font_variations=None,lineHeight=None):
+def make_fs(string,font_path,font_size,font_variations=None,lineHeight=None):
     f = db.FormattedString()
     f.font(font_path)
     f.fontSize(font_size)
@@ -101,7 +101,7 @@ def make_fs_local(string,font_path,font_size,font_variations=None,lineHeight=Non
     f+=string
     return f
 
-def add_counter_and_make_fs_local(string,font_path,font_size,font_variations=None,lineHeight=None):
+def add_counter_and_make_fs(string,font_path,font_size,font_variations=None,lineHeight=None):
     f = db.FormattedString()
     f.font(font_path)
     f.fontSize(font_size)
@@ -117,7 +117,7 @@ def add_counter_and_make_fs_local(string,font_path,font_size,font_variations=Non
     return f
 
 
-def fallingParagraphlocal(fs_by_lines, text_box, color_name, font_path, font_size, font_variations=None, line_angle=0):    
+def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, font_variations=None, line_angle=0):    
     my_shapes = {}    
     if font_variations:
         the_fontVariations = font_variations
@@ -163,7 +163,7 @@ text_box   = (60, 1600, 800, 700)
 the_text = "DIPLÖE"
 fontVariations = {"wdth":80,"wght":800,"slnt":0}
 
-def physParagraph(font_path, font_size, text_color,text_box, the_text, fontVariations, split_by_glyphs=False,line_angle=0):
+def physParagraph(font_path, font_size, text_color,text_box, the_text, fontVariations, split_by_glyphs=False):
     text_color_name = text_color
     the_font_path = font_path
     the_font_size = font_size
@@ -177,24 +177,21 @@ def physParagraph(font_path, font_size, text_color,text_box, the_text, fontVaria
     else:
         fs_w_counter_A = make_fs(the_text_A, the_font_path, the_font_size, font_variations=the_fontVariations_A, lineHeight=the_font_size*1.1)
 
-    return fallingParagraph(fs_w_counter_A, text_box_A, text_color_name, the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=line_angle)
+    return fallingParagraph(fs_w_counter_A, text_box_A, text_color_name, the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=-1)
 
 
 the_boxes = [
-    (200, 900,  600, 300),
-    (200, 1100, 600, 300),
-    (200, 1300, 600, 300),
-    (200, 1500, 600, 300),
-    (200, 1700, 600, 300),
-    (200, 1900, 600, 300),
-    (200, 2100, 600, 300),
+    (60, 1600, 800, 700),
+    (60, 1400, 800, 700),
+    (60, 1200, 800, 700),
+    (60, 1000, 800, 700),
+    (60, 800, 800, 700),
+    (60, 600, 800, 700),
 ]
-
-shapes_dict = []
 
 for box in the_boxes:
     shapes_dict = physParagraph(font_path, font_size, text_color, box, the_text, fontVariations)
-    shapes_dict[0][1].hit((0,-30000000),(500,0))
+    shapes_dict[0][1].hit((-1000000,0),(400,350))
     
     for dict_entry in shapes_dict:
         print(shapes_dict[dict_entry])
@@ -212,96 +209,13 @@ the_boxes_2 = [
 text_color = "Black"
 fontVariations = {"wdth":80,"wght":200,"slnt":-11}
 
-#shapes_dict2 = dict()
-
 for box in the_boxes_2:
-    shapes_dict2 = physParagraph(font_path, font_size, text_color, box, the_text, fontVariations)
-    print(shapes_dict2)
-    shapes_dict2[0][1].hit((1000000,0),(400,350))
+    shapes_dict = physParagraph(font_path, font_size, text_color, box, the_text, fontVariations)
+    shapes_dict[0][1].hit((1000000,0),(400,350))
     
     for dict_entry in shapes_dict:
         print(shapes_dict[dict_entry])
-        shapes_dict2[dict_entry][1].category=cat2
-        shapes_dict2[dict_entry][1].gravity=(gral_gravity[0],-gral_gravity[1])
-
-print(f"THE DICT{shapes_dict2}")
-
-
-def swapGravity(keys):
-    limit =30
-    if canvas.frame_count >= limit - 1 and (canvas.frame_count - (limit - 1)) % limit == 0:
-        print(f"🦻DOING THE THING:{limit}")
-
-        def swap_gravity(item):
-            new_grav_x = item.gravity[0]
-            new_grav_y = item.gravity[1]
-            item.gravity(new_grav_x,new_grav_y)
-
-        max_length = max(len(shapes_dict), len(shapes_dict2))  # Find the length of the larger dictionary
-        for i in range(max_length):
-            item1 = shapes_dict.get(i)
-            item2 = shapes_dict2.get(i)
-
-            if item1 is not None:
-                print(f"processing {item1}")
-                swap_gravity(item1)
-            if item2 is not None:
-                print(f"processing {item2}")
-                swap_gravity(item1)
-
-
-            #new_grav_x1 = shapes_dict[dict_entry][1].gravity[0]
-            #new_grav_y1 = shapes_dict[dict_entry][1].gravity[1]
-
-            #new_grav_x2 = shapes_dict2[dict_entry2][1].gravity[0]
-            #new_grav_y2 = shapes_dict2[dict_entry2][1].gravity[1]
-
-            #shapes_dict[dict_entry][1].gravity=(new_grav_x1,new_grav_y1)
-            #shapes_dict2[dict_entry2][1].gravity=(new_grav_x2,new_grav_y2)
-
-        # This block will execute every `limit` frames starting from `limit-1`
-
-def swapGravity(keys):
-    limit =30
-    if canvas.frame_count >= limit - 1 and (canvas.frame_count - (limit - 1)) % limit == 0:
-        print(f"🦻DOING THE THING:{limit}")
-
-        def swap_gravity(item):
-            new_grav_x = item.gravity[0]
-            new_grav_y = item.gravity[1]
-            item.gravity(new_grav_x,new_grav_y)
-
-        max_length = max(len(shapes_dict), len(shapes_dict2))  # Find the length of the larger dictionary
-        for i in range(max_length):
-            item1 = shapes_dict.get(i)
-            item2 = shapes_dict2.get(i)
-
-            if item1 is not None:
-                print(f"processing {item1}")
-                swap_gravity(item1)
-            if item2 is not None:
-                print(f"processing {item2}")
-                swap_gravity(item1)
-
-
-            #new_grav_x1 = shapes_dict[dict_entry][1].gravity[0]
-            #new_grav_y1 = shapes_dict[dict_entry][1].gravity[1]
-
-            #new_grav_x2 = shapes_dict2[dict_entry2][1].gravity[0]
-            #new_grav_y2 = shapes_dict2[dict_entry2][1].gravity[1]
-
-            #shapes_dict[dict_entry][1].gravity=(new_grav_x1,new_grav_y1)
-            #shapes_dict2[dict_entry2][1].gravity=(new_grav_x2,new_grav_y2)
-
-        # This block will execute every `limit` frames starting from `limit-1`
-
-
-def swapGravityGral(keys):
-    limit = 300
-    if canvas.frame_count >= limit - 1 and (canvas.frame_count - (limit - 1)) % limit == 0:
-        print(f"🦻DOING THE THING:")
-        canvas.gravity(gral_gravity[0]*-1,gral_gravity[1]*-1)
-
-canvas.add_observer(swapGravity)
+        shapes_dict[dict_entry][1].category=cat2
+        shapes_dict[dict_entry][1].gravity=(gral_gravity[0],-gral_gravity[1])
 
 run(simulation_on)
