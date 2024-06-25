@@ -662,7 +662,7 @@ def _textBox(p, width, height, caption, mass, static, cosmetic=False):
     from .textbox_shape import TextBox
 
     if mass == -1:
-        mass = width * height * .8 ## I imagine a text is somewhat more heavier than a non text box? 🤔
+        mass = width * height * .4 ## I imagine a text is somewhat more heavier than a non text box? 🤔
         print(f"🐹{mass}")
     # Polygons expect x,y to be the center point
     x = p[0] + width / 2
