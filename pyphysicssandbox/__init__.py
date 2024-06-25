@@ -99,6 +99,7 @@ class PhysCanvas:
         self.time_multiplier        = time_multiplier
         self.simulation_render_time = simulation_render_time #👈🏼 in seconds
         self.print_frame_count      = print_frame_count
+        self.frame_count = 0
         #??? time steadyness somehow (do sine waves, etc) 
 
         #Pygame Window Margins:
@@ -107,7 +108,7 @@ class PhysCanvas:
         else:
             self.win_margin_x = win_margin_x
         if win_margin_y == False:#👇🏼Default value:
-            self.win_margin_y = self.win_margin_x
+            self.win_margin_y = self.render_height/2
         else:
             self.win_margin_y = win_margin_y
         #Pygame Window Width:            
@@ -257,7 +258,7 @@ class PhysCanvas:
 
 ####CHANGE THIS TO INIT THE OBJECT IN EVERY SCRIPT; WITH APPROTIPTRIATE DIMENSIONS AND TITLE;
     #Will also need to change references inside objects, but we can update them to take the canvas, and therefore the canvas.space
-canvas = PhysCanvas("title", 2000, 1000)
+canvas = PhysCanvas("title", 1080, 1920)
 space  = canvas.space
 ####........................................
 
@@ -1139,7 +1140,6 @@ def run(do_physics=True):
     pygame.display.set_caption(canvas.window_title)
     clock = pygame.time.Clock()
     running = True
-    frame_count = 0
     max_frames = canvas.simulation_render_time * canvas.frames_x_second
 
     while running:
@@ -1217,11 +1217,11 @@ def run(do_physics=True):
         pygame.display.flip()
         clock.tick(1/canvas.frames_x_second*10000)#👈🏼 pygame.clock is in milliseconds so it's 1/frames_x_second * 1000
 
-        frame_count += 1
+        canvas.frame_count += 1
         if canvas.print_frame_count:
-            print(f"frame_count:{frame_count}")
+            print(f"frame_count:{canvas.frame_count}")
 
-        if frame_count >= max_frames:
+        if canvas.frame_count >= max_frames:
             running = False
 
     ####👾 pygame:
