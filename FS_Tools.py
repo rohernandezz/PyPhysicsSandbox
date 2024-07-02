@@ -30,7 +30,7 @@ def add_counter_and_make_fs(string,font_path,font_size,font_variations=None,line
     return f
 
 
-def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, font_variations=None, line_angle=0, keep_first_height=False,category=None):
+def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, font_variations=None, line_angle=0, keep_first_height=False,category=None,gravity=None):
     my_shapes = {}   
     
 
@@ -61,4 +61,7 @@ def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, fo
         my_shapes[i][1].angle=line_angle
         if category:
             my_shapes[i][1].category=category
+        if gravity:
+            #print("GRAVITY!!!")
+            my_shapes[i][1].gravity=gravity    
     return my_shapes

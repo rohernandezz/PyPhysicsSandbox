@@ -258,7 +258,7 @@ class PhysCanvas:
 
 ####CHANGE THIS TO INIT THE OBJECT IN EVERY SCRIPT; WITH APPROTIPTRIATE DIMENSIONS AND TITLE;
     #Will also need to change references inside objects, but we can update them to take the canvas, and therefore the canvas.space
-canvas = PhysCanvas("title", 1080, 1920)
+canvas = PhysCanvas("title", 2000, 1000)
 space  = canvas.space
 ####........................................
 
