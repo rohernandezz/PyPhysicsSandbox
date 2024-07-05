@@ -82,7 +82,7 @@ class PhysCanvas:
                 simulation_render_time=2,
                 time_multiplier=1,
                 print_frame_count=True,
-                drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='~/Desktop/',
+                drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='~/Desktop/DiploeRenders/',
                 verbose=True):
 
         #General Settings:

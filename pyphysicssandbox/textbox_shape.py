@@ -14,6 +14,7 @@ class TextBox(Box):
 
         self.width =  width
         self.height = height
+        pygame.font.init()
         self.font = pygame.font.Font(font_path, font_size)
         self.font_path = font_path
         self.font_size = font_size
