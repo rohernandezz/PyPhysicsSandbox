@@ -43,6 +43,7 @@ def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, fo
         #print(f"😎{bounds.bounds}")
         add_y = y+h#👈🏼add height to Y because pyhsics draws from the other side
         letter_rect = (x,add_y,w,h)
+        the_line_angle=0
 
         if split_characters:
             this_baselineOffset = bounds.baselineOffset
@@ -62,7 +63,7 @@ def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, fo
                 #letter_rect = (add_X, add_Y+maxy-miny, 2, 2)
                 
             letter_rect = (add_X, add_Y+maxy-miny, maxx - minx, maxy- miny)
-
+            
             if isinstance(line_angle, tuple):
                 if len(line_angle) == 2:
                     the_line_angle=randrange(line_angle[0],line_angle[1])

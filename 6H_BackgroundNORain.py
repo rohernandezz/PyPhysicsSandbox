@@ -16,7 +16,7 @@ import drawBot as db
 canvas.window_title = "6H_Background_w_Rain"
 canvas.render_width  = 2000
 canvas.render_height = 1000
-canvas.frames_x_second = 10
+canvas.frames_x_second = 30
 canvas.simulation_render_time = 15
 #Default canvas color:
 canvas.color("Green")
@@ -161,29 +161,12 @@ the_font_path = "fonts/VF/DiploeVF.ttf"
 the_font_size = 280
 text_color_name = (230,228,102,255)
 
-text_box_A = (-7000, -1500, 7000, 1500)
+text_box_A = (-4500, -1000, 5000, 1500)
 the_text_A = "Equality is a vital need of the human soul. It consists in a recognition, at once public, general, effective and genuinely expressed in institutions and customs, that the same amount of respect and consideration is due to every human being because this respect is due to the human being as such and is not a matter of degree. It follows that the inevitable differences among men ought never to imply any difference in the degree of respect. And so that these differences may not be felt to bear such an implication, a certain balance is necessary between equality and inequality. A certain combination of equality and inequality is formed by equality of opportunity. If no matter who can attain the social rank corresponding to the function he is capable of filling, and if education is sufficiently generalized so that no one is prevented from developing any capacity simply on account of his birth, the prospects are the same for every child- In this way, the prospects for each man are the same as for any other man, both as regards himself when young, and as regards his children later on. But when such a combination acts alone, and not as one factor amongst other factors, it ceases to constitute a balance and contains great dangers. To begin with, for a man who occupies an inferior position and suffers from it to know that his position is a result of his incapacity and that everybody is aware of the fact is not any consolation, but an additional motive of bitterness ; according to the individual character, some men can thereby be thrown into a state of depression, while others can be encouraged to commit crime. Then, in social life, a sort of aspirator towards the top is inevitably created. If a descending movement does not come to balance this ascending movement, the social body becomes sick. To the extent to which it is really possible for the son of a farm labourer to become one day a minister, to the same extent should it really be possible for the son of a minister to become one day a farm labourer. This second possibility could never assume any noticeable proportions without a very dangerous degree of social constraint."
-the_text_A = "E"
+#the_text_A = "E"
 the_fontVariations_A ={"wdth":80,"wght":900,"slnt":0}
 fs_w_counter_A = add_counter_and_make_fslocal(the_text_A, the_font_path, the_font_size, font_variations=the_fontVariations_A, lineHeight=the_font_size)
 
-#fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=-1,category=cat1)
-
-
-the_font_size = 120
-text_color_name_B = "Black"
-the_fontVariations_B ={"wdth":50,"wght":200,"slnt":0}
-rain_text = "Diplöe "
-fs_w_counter_B = add_counter_and_make_fslocal(rain_text*500, the_font_path, the_font_size, font_variations=the_fontVariations_B, lineHeight=the_font_size)
-text_box_B = (-250, -3000, rw+500, 5000)
-
-floor_margin = 600
-floor_he = 100
-rain_clearance = 200
-cat2_floor = static_box((0-floor_margin, rh+rain_clearance+floor_he), rw+(2*floor_margin),floor_he)
-cat2_floor.category=cat2
-cat2_floor.elasticity=.95
-fallingParagraphlocal(fs_w_counter_B, text_box_B, text_color_name_B,the_font_path, the_font_size, font_variations=the_fontVariations_B,line_angle=randint(-5,10),category=cat2,gravity=(-60,500))
-
+fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=-1,category=cat1)
 
 run(simulation_on)

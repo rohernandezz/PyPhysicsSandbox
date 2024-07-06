@@ -82,7 +82,8 @@ class PhysCanvas:
                 simulation_render_time=2,
                 time_multiplier=1,
                 print_frame_count=True,
-                drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='~/Desktop/DiploeRenders/',
+                #drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='/Users/Ro/Dropbox/*A/_Diploe/rev2/2RC/',#'~/Desktop/DiploeRenders/', 
+                drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='~/Desktop/DiploeRenders/', 
                 verbose=True):
 
         #General Settings:
@@ -104,7 +105,7 @@ class PhysCanvas:
 
         #Pygame Window Margins:
         if win_margin_x == False:#👇🏼Default value:
-            self.win_margin_x = self.render_width / 3
+            self.win_margin_x = self.render_width/3
         else:
             self.win_margin_x = win_margin_x
         if win_margin_y == False:#👇🏼Default value:
@@ -126,7 +127,7 @@ class PhysCanvas:
         #### Simulation Shapes:
         self.shapes = {}
         #Simulation Boundaries:
-        self.x_margin = self.win_width  # simulation boundaries x
+        self.x_margin = self.win_width*2  # simulation boundaries x
         self.y_margin = self.win_height # simulation boundaries y
         self.default_font_path = "fonts/Comic Sans MS.ttf"
         self.default_font_size = 85
@@ -134,6 +135,7 @@ class PhysCanvas:
         ###PYGAME START:
         ### 2. Starts the pygame instance
         pygame.init()
+
         if verbose:
             print("pygame init: 👾✅")
         self.default_color = Color('black')
@@ -460,7 +462,8 @@ def cosmetic_rounded_box(p, width, height, radius):
 def static_polygon(vertices):
     """Creates a polygon that remains fixed in place.
 
-    :param vertices: A tuple of points on the polygon
+    :param vertices: A tuple of points ongrad
+     the polygon
     :type vertices: ((int, int), (int, int), ...)
     :rtype: shape
 
@@ -1051,8 +1054,8 @@ def deactivate(shape):
     """
     if not shape.active:
         return
-
-    shape.deactivate()
+    if shape.active:
+        shape.deactivate()
     del canvas.shapes[shape.collision_type]
 
 
@@ -1166,6 +1169,11 @@ def run(do_physics=True):
         ###🎨 DrawBot:
         drawBot.newPage(canvas.render_width, canvas.render_height)
         drawBot.frameDuration(1/canvas.frames_x_second)
+        with drawBot.savedState():
+            the_colors = [rgb_to_normalized(218,219,238,255),rgb_to_normalized(230,228,102,255)]
+            drawBot.linearGradient(startPoint=(0,0), endPoint=(canvas.render_width,0), colors=the_colors) #HORIZ
+            drawBot.linearGradient(startPoint=(canvas.render_width,0), endPoint=(0,canvas.render_height), colors=the_colors) #VERT
+            drawBot.rect(0,0,canvas.render_width, canvas.render_height)
         drawBot.translate(-canvas.win_margin_x,canvas.win_margin_y)
     #/#/#/#/
 
@@ -1226,7 +1234,7 @@ def run(do_physics=True):
 
     ####👾 pygame:
     pygame.quit()   
-    #print("pygame quit: 👾⛔️")
+    print("pygame quit: 👾⛔️")
 
     ###🎨 DrawBot:
     if canvas.drawBot_on:

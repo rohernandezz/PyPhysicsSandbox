@@ -18,7 +18,7 @@ def makeRender(variations,the_color):
     #👉🏼👉🏼Canvas settings:
     #-------------------
     canvas.shapes = {}
-    canvas.window_title = "7H_TextureBold_b"
+    canvas.window_title = "7H_Walls"
     canvas.render_width  = 2000
     canvas.render_height = 1000
     canvas.frames_x_second = 30
@@ -70,25 +70,28 @@ def makeRender(variations,the_color):
     ####----------------------------------------
 
     #### Background
-    background = cosmetic_box((0, 0), rw, rh)
-    background.color = Color(the_color)
-    if the_color == "Grey":
-        background.db_color = diploe_grey
-    if the_color == "Yellow":
-        background.db_color = diploe_yellow
+    #background = cosmetic_box((0, 0), rw, rh)
+    #background.color = Color(the_color)
+    #if the_color == "Grey":
+    #    background.db_color = diploe_grey
+    #if the_color == "Yellow":
+    #    background.db_color = diploe_yellow
 
-    wall_offset =1500
+    ### Physicsiphy world:
+    wall_offset = 0
     left_wall  = static_box((0-wall_offset-wall_w,0), wall_w, rh)
     right_wall = static_box((rw+wall_offset,0), wall_w, rh)
+    #left_wall.color  = wall_color
+    #right_wall.color = wall_color
 
     #### Floor or ceiling: (both use floorH:int)
     if y_limit == "floor":
-        floor      = static_box((-rw, rh), rw*4, floor_h)    
+        floor      = static_box((-rw, rh), rw*6, floor_h)    
     elif y_limit == "ceiling":
         ceiling    = static_box((0, 0-rh), rw, floor_h)
 
     #floor.color = floor_color
-    floor.category = cat1
+    #floor.category = cat1
 
 
 
@@ -106,12 +109,12 @@ def makeRender(variations,the_color):
     the_font_size = 280
     text_color_name = "Black"
 
-    text_box_A = (50, -1000, rw, 1300)
+    text_box_A = (150, -1000, rw*.82, 1300)
     the_text_A = "To be rooted is perhaps the most important and least recognized need of the human soul. It is one of the hardest to define."# A human being has roots by virtue of his real, active and natural participation in the life of a community which preserves in living shape certain particular treasures of the past and certain particular expectations for the future. This participation is a natural one, in the sense that it is automatically brought about by place, conditions of birth, profession and social surroundings. Every human being needs to have multiple roots. It is necessary for him to draw wellnigh the whole of his moral, intellectual and spiritual life by way of the environment of which he forms a natural part."
     the_text_A = the_text_A
     fs_w_counter_A = add_counter_and_make_fs(the_text_A, the_font_path, the_font_size, font_variations=the_fontVariations_A, lineHeight=the_font_size*.8)
 
-    fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=(-6,2),category=cat1,split_characters=True)
+    fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=(-6,2),split_characters=True)
 
     run(simulation_on)
 
@@ -121,21 +124,21 @@ def makeRender(variations,the_color):
 #                        ]
 
 
-wdth_list = [100,150,50]
+wdth_list = [50,100,150]
 #wght_list = [200,300,400,500,600,700,900]
 wght_list = [900,700,600,500,400,300,200]
-slnt_list = [0,-11]
+slnt_list = [-11,0]
 
 color_list = ["Yellow","Grey"]
 
-for the_color in color_list:
-    for wght_value in wght_list:
+#for the_color in color_list:
+for wght_value in wght_list:
         for wdth_value in wdth_list:
             for slnt_value in slnt_list:
                 variations = {"wdth":wdth_value,"wght":wght_value,"slnt":slnt_value}
-                title = f"wdth{wdth_value}_wght{wght_value}_slnt{slnt_value}"
+                title = f"walls_wdth{wdth_value}_wght{wght_value}_slnt{slnt_value}"
                 print(f"💕 {title}")
-                makeRender(variations,the_color)
+                makeRender(variations,"the_color")
 
 #for variations in fontVariations_list:
 #    title = f"{variations}"
