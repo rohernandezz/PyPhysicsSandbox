@@ -13,7 +13,7 @@ import drawBot as db
 #=================
 #👉🏼👉🏼Canvas settings:
 #-------------------
-canvas.window_title = "6H2_Rain-WideBlack"
+canvas.window_title = "6H2_Rain-WideThin"
 canvas.render_width  = 2000
 canvas.render_height = 1000
 canvas.frames_x_second = 30
@@ -28,7 +28,7 @@ w,h = canvas.win_width, canvas.win_height
 #Gral physics settings:
 
 #----------------------
-canvas.gravity(-16,400)  ###👈🏼👈🏼GRAVITY:(x,y)
+canvas.gravity(13,400)  ###👈🏼👈🏼GRAVITY:(x,y)
 canvas.resistance(.95) #sandbox default is .95
 gral_elasticity = .9   #sandbox default is .9
 gral_friction   = .6   #sandbox default is .6
@@ -159,20 +159,20 @@ def fallingParagraphlocal(fs_by_lines, text_box, color_name, font_path, font_siz
 
 the_font_path = "fonts/VF/DiploeVF.ttf" 
 the_font_size = 160
-text_color_name_B = (218,219,238,255) #diploeGrey
-#text_color_name_B = (230,228,102,255) #diploeYellow
-the_fontVariations_B ={"wdth":150,"wght":700,"slnt":0}
+#text_color_name_B = (218,219,238,255) #diploeGrey
+text_color_name_B = (230,228,102,255) #diploeYellow
+the_fontVariations_B ={"wdth":150,"wght":50,"slnt":0}
 rain_text = "Diplöe "
 fs_w_counter_B = add_counter_and_make_fslocal(rain_text*300, the_font_path, the_font_size, font_variations=the_fontVariations_B, lineHeight=the_font_size)
 text_box_B = (-50, -3200, rw*1.5, 3800)
 
 floor_margin = 600
 floor_he = 100
-rain_clearance = 100
+rain_clearance = 500
 cat2_floor = static_box((0-floor_margin, rh+rain_clearance+floor_he), rw+(2*floor_margin),floor_he)
 cat2_floor.category=cat2
 cat2_floor.elasticity=.95
-fallingParagraphlocal(fs_w_counter_B, text_box_B, text_color_name_B,the_font_path, the_font_size, font_variations=the_fontVariations_B,line_angle=randint(-5,10),category=cat2)
+fallingParagraphlocal(fs_w_counter_B, text_box_B, text_color_name_B,the_font_path, the_font_size, font_variations=the_fontVariations_B,line_angle=5,category=cat2)
 
 
 run(simulation_on)

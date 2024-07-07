@@ -17,7 +17,7 @@ import drawBot as db
 canvas.window_title = "6H_Rain-yellow"
 canvas.render_width  = 2000
 canvas.render_height = 1000
-canvas.frames_x_second = 3
+canvas.frames_x_second = 10
 canvas.simulation_render_time = 15
 #Default canvas color:
 canvas.color("Green")
