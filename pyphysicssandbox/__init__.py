@@ -114,7 +114,7 @@ class PhysCanvas:
             self.win_margin_y = win_margin_y
         #Pygame Window Width:            
         self.win_width = self.win_margin_x + self.render_width + self.win_margin_x #Margin on both sides
-        self.win_height = self.render_height + self.win_margin_y                   #Margin only on top         
+        self.win_height = self.render_height + self.win_margin_y+ self.win_margin_y                   #Margin only on top         
  
         ###SIMULATION START:
         #Start the pymunk space
@@ -1171,8 +1171,9 @@ def run(do_physics=True):
         drawBot.frameDuration(1/canvas.frames_x_second)
         with drawBot.savedState():
             the_colors = [rgb_to_normalized(218,219,238,255),rgb_to_normalized(230,228,102,255)]
-            drawBot.linearGradient(startPoint=(0,0), endPoint=(canvas.render_width,0), colors=the_colors) #HORIZ
+            drawBot.linearGradient(startPoint=(0,0), endPoint=(canvas.render_width,canvas.render_height), colors=the_colors) #HORIZ
             #drawBot.linearGradient(startPoint=(canvas.render_width,0), endPoint=(0,canvas.render_height), colors=the_colors) #VERT
+            
             drawBot.rect(0,0,canvas.render_width, canvas.render_height)
         drawBot.translate(-canvas.win_margin_x,canvas.win_margin_y)
     #/#/#/#/
