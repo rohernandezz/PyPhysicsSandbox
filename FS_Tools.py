@@ -1,6 +1,6 @@
 from pyphysicssandbox import *
 from pyphysicssandbox import canvas
-from random import randrange
+import random
 import drawBot as db
 
 def make_fs(string,font_path,font_size,font_variations=None,lineHeight=None):
@@ -31,7 +31,7 @@ def add_counter_and_make_fs(string,font_path,font_size,font_variations=None,line
     return f
 
 
-def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, font_variations=None, line_angle=0, split_characters=False,category=None,gravity=None):
+def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, line_height=None, font_variations=None, line_angle=0, split_characters=False,category=None,gravity=None):
     my_shapes = {}   
 
     #####Make a rect for every line
@@ -43,12 +43,19 @@ def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, fo
         #print(f"😎{bounds.bounds}")
         add_y = y+h#👈🏼add height to Y because pyhsics draws from the other side
         letter_rect = (x,add_y,w,h)
-        the_line_angle=0
+        
+        if isinstance(line_angle, tuple):
+            if len(line_angle) == 2:
+                the_line_angle=random.uniform(line_angle[0],line_angle[1])
+            else:
+                the_line_angle=0
+                print("line angle not valid, defaulting to 0")
+        else:
+            the_line_angle = line_angle
 
         if split_characters:
             this_baselineOffset = bounds.baselineOffset
-            print("🏴󠁧󠁢󠁥󠁮󠁧󠁿🏴󠁧󠁢󠁥󠁮󠁧󠁿🏴󠁧󠁢󠁥󠁮󠁧󠁿🏴󠁧󠁢󠁥󠁮󠁧󠁿")
-            print(f"this_baselineOffset: {this_baselineOffset}")
+            #print(f"this_baselineOffset: {this_baselineOffset}")
             path = db.BezierPath()            
             path.text(bounds.formattedSubString)
             add_X = x
@@ -63,15 +70,7 @@ def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, fo
                 #letter_rect = (add_X, add_Y+maxy-miny, 2, 2)
                 
             letter_rect = (add_X, add_Y+maxy-miny, maxx - minx, maxy- miny)
-            
-            if isinstance(line_angle, tuple):
-                if len(line_angle) == 2:
-                    the_line_angle=randrange(line_angle[0],line_angle[1])
-                else:
-                    the_line_angle=0
-                    print("line angle not valid, defaulting to 0")
-            else:
-                the_line_angle = line_angle
+        
         
         print(letter_rect)
     ## Simulation Objects make:

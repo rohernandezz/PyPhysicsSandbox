@@ -13,7 +13,7 @@ import drawBot as db
 #=================
 #👉🏼👉🏼Canvas settings:
 #-------------------
-canvas.window_title = "6H_Background_w_Rain"
+canvas.window_title = "6H_Background_NO_rain-STATE01"
 canvas.render_width  = 2000
 canvas.render_height = 1000
 canvas.frames_x_second = 30
@@ -159,8 +159,7 @@ def fallingParagraphlocal(fs_by_lines, text_box, color_name, font_path, font_siz
 
 the_font_path = "fonts/VF/DiploeVF.ttf" 
 the_font_size = 280
-text_color_name = (230,228,102,255)
-
+text_color_name = "Black"
 text_box_A = (-4500, -1000, 5000, 1500)
 the_text_A = "Equality is a vital need of the human soul. It consists in a recognition, at once public, general, effective and genuinely expressed in institutions and customs, that the same amount of respect and consideration is due to every human being because this respect is due to the human being as such and is not a matter of degree. It follows that the inevitable differences among men ought never to imply any difference in the degree of respect. And so that these differences may not be felt to bear such an implication, a certain balance is necessary between equality and inequality. A certain combination of equality and inequality is formed by equality of opportunity. If no matter who can attain the social rank corresponding to the function he is capable of filling, and if education is sufficiently generalized so that no one is prevented from developing any capacity simply on account of his birth, the prospects are the same for every child- In this way, the prospects for each man are the same as for any other man, both as regards himself when young, and as regards his children later on. But when such a combination acts alone, and not as one factor amongst other factors, it ceases to constitute a balance and contains great dangers. To begin with, for a man who occupies an inferior position and suffers from it to know that his position is a result of his incapacity and that everybody is aware of the fact is not any consolation, but an additional motive of bitterness ; according to the individual character, some men can thereby be thrown into a state of depression, while others can be encouraged to commit crime. Then, in social life, a sort of aspirator towards the top is inevitably created. If a descending movement does not come to balance this ascending movement, the social body becomes sick. To the extent to which it is really possible for the son of a farm labourer to become one day a minister, to the same extent should it really be possible for the son of a minister to become one day a farm labourer. This second possibility could never assume any noticeable proportions without a very dangerous degree of social constraint."
 #the_text_A = "E"

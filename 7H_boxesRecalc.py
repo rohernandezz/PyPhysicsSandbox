@@ -97,7 +97,7 @@ text_color_name = (230,228,102,255)
 text_box_A = (100, -2000, rw*1.2, 2000)
 the_text_A = "Donec auctor malesuada velit."
 the_text_A = the_text_A *10
-the_fontVariations_A ={"wdth":80,"wght":900,"slnt":0}
+the_fontVariations_A = {"wdth":80,"wght":900,"slnt":0}
 fs_w_counter_A = add_counter_and_make_fs(the_text_A, the_font_path, the_font_size, font_variations=the_fontVariations_A, lineHeight=the_font_size*.8)
 
 fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=(-6,2),category=cat1,split_characters=True)

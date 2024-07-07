@@ -1172,7 +1172,7 @@ def run(do_physics=True):
         with drawBot.savedState():
             the_colors = [rgb_to_normalized(218,219,238,255),rgb_to_normalized(230,228,102,255)]
             drawBot.linearGradient(startPoint=(0,0), endPoint=(canvas.render_width,0), colors=the_colors) #HORIZ
-            drawBot.linearGradient(startPoint=(canvas.render_width,0), endPoint=(0,canvas.render_height), colors=the_colors) #VERT
+            #drawBot.linearGradient(startPoint=(canvas.render_width,0), endPoint=(0,canvas.render_height), colors=the_colors) #VERT
             drawBot.rect(0,0,canvas.render_width, canvas.render_height)
         drawBot.translate(-canvas.win_margin_x,canvas.win_margin_y)
     #/#/#/#/
