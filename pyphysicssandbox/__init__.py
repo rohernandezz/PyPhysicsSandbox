@@ -82,7 +82,7 @@ class PhysCanvas:
                 simulation_render_time=2,
                 time_multiplier=1,
                 print_frame_count=True,
-                drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='/Users/Ro/Dropbox/*A/_Diploe/rev2/3/',#'~/Desktop/DiploeRenders/', 
+                drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='/Users/Ro/Dropbox/*A/_Diploe/rev2/4/',#'~/Desktop/DiploeRenders/', 
                 #drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='~/Desktop/DiploeRenders/', 
                 verbose=True):
 
@@ -1171,9 +1171,9 @@ def run(do_physics=True):
         drawBot.frameDuration(1/canvas.frames_x_second)
         with drawBot.savedState():
             the_colors = [rgb_to_normalized(218,219,238,255),rgb_to_normalized(230,228,102,255)]
-            drawBot.linearGradient(startPoint=(0,canvas.render_height), endPoint=(canvas.render_width*1.3,0), colors=the_colors) #HORIZ
+            #drawBot.linearGradient(startPoint=(0,canvas.render_height), endPoint=(canvas.render_width*1.3,0), colors=the_colors) #HORIZ
             #drawBot.linearGradient(startPoint=(canvas.render_width,0), endPoint=(0,canvas.render_height), colors=the_colors) #VERT
-            
+            drawBot.linearGradient(startPoint=(0,0), endPoint=(canvas.render_width,canvas.render_height), colors=the_colors) #HORIZ
             drawBot.rect(0,0,canvas.render_width, canvas.render_height)
         drawBot.translate(-canvas.win_margin_x,canvas.win_margin_y)
     #/#/#/#/

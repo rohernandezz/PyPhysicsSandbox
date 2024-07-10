@@ -110,9 +110,9 @@ def makeRender(variations,the_color):
     the_font_size = 280
     text_color_name = "Black"
 
-    text_box_A = (200, 1000, rw*.80, 1700)
+    text_box_A = (150, 1000, rw*.9, 1700)
     the_text_A = "A human being has roots by virtue of his real, active and natural participation in the life of a community which preserves in living shape certain particular treasures of the past and certain particular expectations for the future. This participation is a natural one, in the sense that it is automatically brought about by place, conditions of birth, profession and social surroundings. Every human being needs to have multiple roots. It is necessary for him to draw wellnigh the whole of his moral, intellectual and spiritual life by way of the environment of which he forms a natural part."
-    the_text_A = the_text_A
+    the_text_A = "Equality is a vital need of the human soul."
     fs_w_counter_A = add_counter_and_make_fs(the_text_A, the_font_path, the_font_size, font_variations=the_fontVariations_A, lineHeight=the_font_size*.8)
 
     fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=(-6,2),split_characters=True)
@@ -125,10 +125,10 @@ def makeRender(variations,the_color):
 #                        ]
 
 
-wdth_list = [50,100,150]
-wght_list = [200,300,400,500,600,700,900]
+wdth_list = [150]
+wght_list = [900]
 #wght_list = [900,700,600,500,400,300,200]
-slnt_list = [-11,0]
+slnt_list = [0]
 
 color_list = ["Grey","Yellow"]
 
