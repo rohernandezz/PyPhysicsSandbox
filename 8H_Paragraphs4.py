@@ -15,7 +15,7 @@ from pyphysicssandbox import canvas
 #=================
 #👉🏼👉🏼Canvas settings:
 #-------------------
-canvas.window_title = "8H_paragraphsv3b"
+canvas.window_title = "8H_paragraphsv4"
 canvas.render_width  = 2000
 canvas.render_height = 1000
 canvas.frames_x_second = 30
@@ -116,8 +116,8 @@ a_ledge.color = Color("Red")
 
 fallingParagraph(fs_w_counter_B, text_box_B, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_B,line_angle=5)
 
-simone = textBox_with_font((200,450),300,100,"Simone Weil","fonts/DiploeNarrow-Bold.otf",the_font_size)
+simone = textBox_with_font((200,450),480,100,"Simone Weil",the_font_path, the_font_size, font_variations=the_fontVariations_B)
 simone.elasticity=.1
-uproot = textBox_with_font((300,530),420,100,"Uprootedness, 1949","fonts/DiploeNarrow-RegularItalic.otf",the_font_size)
+uproot = textBox_with_font((300,530),850,100,"Uprootedness, 1949",the_font_path, the_font_size, font_variations=the_fontVariations_B)
 uproot.elasticity=.1
 run(simulation_on)

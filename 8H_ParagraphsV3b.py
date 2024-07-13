@@ -114,8 +114,8 @@ a_ledge.color = Color("Red")
 
 fallingParagraph(fs_w_counter_B, text_box_B, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=5)
 
-simone = textBox_with_font((1500,450),300,100,"Simone Weil","fonts/DiploeNarrow-Bold.otf",the_font_size)
+simone = textBox_with_font((1500,450),300,100,"Simone Weil",the_font_path,the_font_size,font_variations=the_fontVariations_A )
 simone.elasticity=.1
-uproot = textBox_with_font((1400,530),420,100,"Uprootedness, 1949","fonts/DiploeNarrow-Regular.otf",the_font_size)
+uproot = textBox_with_font((1400,530),420,100,"Uprootedness, 1949",the_font_path,the_font_size,font_variations=the_fontVariations_A)
 uproot.elasticity=.1
 run(simulation_on)

@@ -3,7 +3,6 @@ simulation_on = True
 ##############################
 from pyphysicssandbox import *
 from pyphysicssandbox import canvas
-from gridListMaker import divide_in
 
 from FS_Tools import make_fs, add_counter_and_make_fs, fallingParagraph
 import drawBot as db
@@ -13,11 +12,11 @@ import drawBot as db
 #=================
 #👉🏼👉🏼Canvas settings:
 #-------------------
-canvas.window_title = "3V_Falling_A"
-canvas.render_width  = 1080
-canvas.render_height = 1920
-canvas.frames_x_second = 60
-canvas.simulation_render_time = 10
+canvas.window_title = "3V_Falling_B"
+canvas.render_width  = 2000
+canvas.render_height = 1000
+canvas.frames_x_second = 30
+canvas.simulation_render_time = 15
 #Default canvas color:
 canvas.color("Green")
 
@@ -27,7 +26,7 @@ w,h = canvas.win_width, canvas.win_height
 #----------------------
 #Gral physics settings:
 #----------------------
-gral_gravity=1,50
+gral_gravity=-1,-50
 canvas.gravity(*gral_gravity)  ###👈🏼👈🏼GRAVITY:(x,y)
 canvas.resistance(.95) #sandbox default is .95
 gral_elasticity = .99   #sandbox default is .9
@@ -78,8 +77,8 @@ elif y_limit == "ceiling":
     ceiling    = static_box((0, 0), rw, floor_h)
 elif y_limit == "both":
     floor      = static_box((0, rh-floor_h), rw, floor_h)    
-    ceiling    = static_box((0, 0), rw, floor_h)
-    ceiling.category = cat2
+    ceiling    = static_box((0, 0,floor_h), rw, floor_h)
+    #ceiling.category = cat2
 floor.color   = floor_color
 
 #### Background
@@ -159,7 +158,7 @@ def fallingParagraph(fs_by_lines, text_box, color_name, font_path, font_size, fo
 
 font_path = "fonts/VF/DiploeVF.ttf" 
 font_size = 200
-text_color = (218,219,238,255)
+text_color = "Black"
 text_box   = (60, 1600, 800, 700)
 the_text = "DIPLÖE"
 fontVariations = {"wdth":80,"wght":800,"slnt":0}
@@ -182,41 +181,42 @@ def physParagraph(font_path, font_size, text_color,text_box, the_text, fontVaria
 
 
 the_boxes = [
-    (60, 1600, 800, 700),
-    (60, 1400, 800, 700),
-    (60, 1200, 800, 700),
-    (60, 1000, 800, 700),
-    (60, 800, 800, 700),
-    (60, 600, 800, 700),
+    #(60, 1600, 800, 700),
+    #(60, 1400, 800, 700),
+    (610, 1200, 800, 700),
+    (580, 1000, 800, 700),
+    (520, 800, 800, 700),
+    (460, 600, 800, 700),
 ]
 
 for box in the_boxes:
     shapes_dict = physParagraph(font_path, font_size, text_color, box, the_text, fontVariations)
-    shapes_dict[0][1].hit((-1000000,0),(400,350))
+    shapes_dict[0][1].hit((6000000,-600000),(400,350))
     
     for dict_entry in shapes_dict:
         print(shapes_dict[dict_entry])
         shapes_dict[dict_entry][1].category= cat1
 
-the_boxes_2 = [
-    (400, 000, 800, 700),
-    (400, 200, 800, 700),
-    (400, 400, 800, 700),
-    (400, 600, 800, 700),
-    (400, 800, 800, 700),
-    (400, 1000, 800, 700),
-]
+# the_boxes_2 = [
+#     (400, 000, 800, 700),
+#     (400, 200, 800, 700),
+#     (400, 400, 800, 700),
+#     (400, 600, 800, 700),
+#     (400, 800, 800, 700),
+#     (400, 1000, 800, 700),
+# ]
 
-text_color = "Black"
-fontVariations = {"wdth":80,"wght":200,"slnt":-11}
+# text_color = "Black"
+# fontVariations = {"wdth":80,"wght":200,"slnt":-11}
 
-for box in the_boxes_2:
-    shapes_dict = physParagraph(font_path, font_size, text_color, box, the_text, fontVariations)
-    shapes_dict[0][1].hit((1000000,0),(400,350))
+# for box in the_boxes_2:
+#     shapes_dict2 = physParagraph(font_path, font_size, text_color, box, the_text, fontVariations)
+#     shapes_dict[0][1].hit((1000000,0),(400,350))
     
-    for dict_entry in shapes_dict:
-        print(shapes_dict[dict_entry])
-        shapes_dict[dict_entry][1].category=cat2
-        shapes_dict[dict_entry][1].gravity=(gral_gravity[0],-gral_gravity[1])
+#     for dict_entry in shapes_dict:
+#         print(shapes_dict[dict_entry])
+#         shapes_dict[dict_entry][1].category=cat2
+#         shapes_dict[dict_entry][1].gravity=(gral_gravity[0],-gral_gravity[1])
+
 
 run(simulation_on)
