@@ -21,7 +21,7 @@ def makeRender(variations,the_color):
     canvas.window_title = "07H_WallsFloatAway"
     canvas.render_width  = 2000
     canvas.render_height = 1000
-    canvas.frames_x_second = 20
+    canvas.frames_x_second = 1
     canvas.simulation_render_time = 10
     #Default canvas color:
     canvas.color("Green")

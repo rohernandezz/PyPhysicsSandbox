@@ -82,7 +82,7 @@ class PhysCanvas:
                 simulation_render_time=2,
                 time_multiplier=1,
                 print_frame_count=True,
-                drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='/Users/Ro/Dropbox/*A/_Diploe/rev2/4/',#'~/Desktop/DiploeRenders/', 
+                drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='/Users/Ro/Dropbox/*A/_Diploe/rev2/5/',#'~/Desktop/DiploeRenders/', 
                 #drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='~/Desktop/DiploeRenders/', 
                 verbose=True):
 
@@ -114,7 +114,7 @@ class PhysCanvas:
             self.win_margin_y = win_margin_y
         #Pygame Window Width:            
         self.win_width = self.win_margin_x + self.render_width + self.win_margin_x #Margin on both sides
-        self.win_height = self.render_height + self.win_margin_y+ self.win_margin_y                   #Margin only on top         
+        self.win_height = self.render_height + self.win_margin_y                   #Margin only on top         
  
         ###SIMULATION START:
         #Start the pymunk space
