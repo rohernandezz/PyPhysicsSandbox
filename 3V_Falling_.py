@@ -3,7 +3,6 @@ simulation_on = True
 ##############################
 from pyphysicssandbox import *
 from pyphysicssandbox import canvas
-from gridListMaker import divide_in
 
 from FS_Tools import make_fs, add_counter_and_make_fs, fallingParagraph
 import drawBot as db
@@ -13,11 +12,11 @@ import drawBot as db
 #=================
 #👉🏼👉🏼Canvas settings:
 #-------------------
-canvas.window_title = "3V_Falling_A"
+canvas.window_title = "3V_Falling_Bold"
 canvas.render_width  = 1080
 canvas.render_height = 1920
 canvas.frames_x_second = 60
-canvas.simulation_render_time = 10
+canvas.simulation_render_time = 16
 #Default canvas color:
 canvas.color("Green")
 
@@ -27,7 +26,7 @@ w,h = canvas.win_width, canvas.win_height
 #----------------------
 #Gral physics settings:
 #----------------------
-gral_gravity=1,50
+gral_gravity=1,-50
 canvas.gravity(*gral_gravity)  ###👈🏼👈🏼GRAVITY:(x,y)
 canvas.resistance(.95) #sandbox default is .95
 gral_elasticity = .99   #sandbox default is .9
@@ -192,11 +191,11 @@ the_boxes = [
 
 for box in the_boxes:
     shapes_dict = physParagraph(font_path, font_size, text_color, box, the_text, fontVariations)
-    shapes_dict[0][1].hit((-1000000,0),(400,350))
-    
-    for dict_entry in shapes_dict:
-        print(shapes_dict[dict_entry])
-        shapes_dict[dict_entry][1].category= cat1
+    shapes_dict[0][1].hit((1000000,-1200000),(400,350))
+#    
+#    for dict_entry in shapes_dict:
+#        print(shapes_dict[dict_entry])
+#        shapes_dict[dict_entry][1].category= cat1
 
 the_boxes_2 = [
     (400, 000, 800, 700),
@@ -207,16 +206,23 @@ the_boxes_2 = [
     (400, 1000, 800, 700),
 ]
 
-text_color = "Black"
-fontVariations = {"wdth":80,"wght":200,"slnt":-11}
+#text_color = "Black"
+#fontVariations = {"wdth":80,"wght":200,"slnt":-11}
 
-for box in the_boxes_2:
-    shapes_dict = physParagraph(font_path, font_size, text_color, box, the_text, fontVariations)
-    shapes_dict[0][1].hit((1000000,0),(400,350))
+#for box in the_boxes_2:
+#    shapes_dict = physParagraph(font_path, font_size, text_color, box, the_text, fontVariations)
+#    shapes_dict[0][1].hit((1000000,-200000),(400,350))
     
-    for dict_entry in shapes_dict:
-        print(shapes_dict[dict_entry])
-        shapes_dict[dict_entry][1].category=cat2
-        shapes_dict[dict_entry][1].gravity=(gral_gravity[0],-gral_gravity[1])
+    #for dict_entry in shapes_dict:
+        #print(shapes_dict[dict_entry])
+        #shapes_dict[dict_entry][1].category=cat2
+        #shapes_dict[dict_entry][1].gravity=(gral_gravity[0],gral_gravity[1])
+
+def gravity_change_observer(keys):
+    if constants.K_UP in keys:
+        print(f"👆🏼👆🏼👆🏼👆🏼")
+        canvas.gravity(1,200)
+
+canvas.add_observer(gravity_change_observer)
 
 run(simulation_on)

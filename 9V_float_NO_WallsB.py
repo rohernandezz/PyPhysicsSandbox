@@ -19,8 +19,8 @@ def makeRender(variations,the_color):
     #-------------------
     canvas.shapes = {}
     canvas.window_title = "07H_WallsFloatAway"
-    canvas.render_width  = 2000
-    canvas.render_height = 1000
+    canvas.render_width  = 1080
+    canvas.render_height = 1920
     canvas.frames_x_second = 20
     canvas.simulation_render_time = 10
     #Default canvas color:
@@ -88,7 +88,7 @@ def makeRender(variations,the_color):
     if y_limit == "floor":
         floor      = static_box((-rw, rh), rw*6, floor_h)    
     elif y_limit == "ceiling":
-        ceiling    = static_box((rw*.45, 0-400), rw*.2, floor_h)
+        ceiling    = static_box((rw*.45, 0-470), rw*.2, floor_h)
         ceiling.elasticity=.2
         ceiling.angle=-25
 
@@ -111,7 +111,7 @@ def makeRender(variations,the_color):
     the_font_size = 280
     text_color_name = "Black"
 
-    text_box_A = (100, 1000, rw*.9, 1700)
+    text_box_A = (100, 1000, rw*.9, 2300)
     the_text_A = "A human being has roots by virtue of his real, active and natural participation in the life of a community which preserves in living shape certain particular treasures of the past and certain particular expectations for the future. This participation is a natural one, in the sense that it is automatically brought about by place, conditions of birth, profession and social surroundings. Every human being needs to have multiple roots. It is necessary for him to draw wellnigh the whole of his moral, intellectual and spiritual life by way of the environment of which he forms a natural part."
     the_text_A = "Equality is a vital need of the human soul."
     fs_w_counter_A = add_counter_and_make_fs(the_text_A, the_font_path, the_font_size, font_variations=the_fontVariations_A, lineHeight=the_font_size*.8)

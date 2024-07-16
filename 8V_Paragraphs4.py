@@ -16,8 +16,8 @@ from pyphysicssandbox import canvas
 #👉🏼👉🏼Canvas settings:
 #-------------------
 canvas.window_title = "8H_paragraphsv4"
-canvas.render_width  = 2000
-canvas.render_height = 1000
+canvas.render_width  = 1080
+canvas.render_height = 1920
 canvas.frames_x_second = 30
 canvas.simulation_render_time = 18
 #Default canvas color:
@@ -71,8 +71,8 @@ diploe_black  = rgb_to_normalized(230,228,102,255)
 #background.db_color = diploe_grey
 
 ### Physicsiphy world:
-left_wall  = static_box((0-wall_w,-rh*3), wall_w, rh*4)
-right_wall = static_box((rw,0), wall_w, rh*.76)
+left_wall  = static_box((0-wall_w,-rh), wall_w, rh*4)
+right_wall = static_box((rw,0), wall_w, rh*2)
 #left_wall.color = wall_color
 #right_wall.color = wall_color
 
@@ -102,7 +102,7 @@ the_text_A = the_text_A
 the_fontVariations_B ={"wdth":140,"wght":300,"slnt":-11}
 fs_w_counter_A = make_fs(the_text_A, the_font_path, the_font_size, font_variations=the_fontVariations_B, lineHeight=the_font_size*1.1)
 
-text_box_B = (800, 2500, 900, 800)
+text_box_B = (100, 2500, 900, 800)
 the_text_B = "Finally, the social relations existing in any one country can be very dangerous factors in connexion with uprootedness. In all parts of our country at the present time — and setting aside the question of the conquest — there are two poisons at work spreading this disease. One of them is money. Money destroys human roots wherever it is able to penetrate, by turning desire for gain into the sole motive. It easily manages to outweigh all other motives, because the effort it demands of the mind is so very much less. Nothing is so clear and so simple as a row of figures."
 the_text_B = the_text_B
 the_fontVariations_B ={"wdth":140,"wght":200,"slnt":-11}
@@ -110,11 +110,11 @@ fs_w_counter_B = make_fs(the_text_B, the_font_path, the_font_size, font_variatio
 
 fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_B,line_angle=0)
 
-a_ledge = static_box((300,1500),650,20)
+a_ledge = static_box((-300,2500),650,20)
 a_ledge.angle = 45
 a_ledge.color = Color("Red")
 
-#fallingParagraph(fs_w_counter_B, text_box_B, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_B,line_angle=5)
+fallingParagraph(fs_w_counter_B, text_box_B, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_B,line_angle=5)
 
 simone = textBox_with_font((200,450),480,100,"Simone Weil",the_font_path, the_font_size, font_variations=the_fontVariations_B)
 simone.elasticity=.1

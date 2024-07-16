@@ -33,7 +33,7 @@ def makeRender(variations,the_color):
     #Gral physics settings:
 
     #----------------------
-    canvas.gravity(0,400)  ###👈🏼👈🏼GRAVITY:(x,y)
+    canvas.gravity(0,-400)  ###👈🏼👈🏼GRAVITY:(x,y)
     canvas.resistance(.95) #sandbox default is .95
     gral_elasticity = .9   #sandbox default is .9
     gral_friction   = .6   #sandbox default is .6
@@ -61,7 +61,7 @@ def makeRender(variations,the_color):
     floor_color = Color("Red")
     wall_w =  100
     wall_color = Color("Blue")
-    y_limit = "floor"
+    y_limit = "ceiling"
 
     ###🎨 COLOR SWATCHES: 🎨
     diploe_grey   = rgb_to_normalized(218,219,238,255)
@@ -70,25 +70,22 @@ def makeRender(variations,the_color):
     ####----------------------------------------
 
     #### Background
-    background = cosmetic_box((0, 0), rw, rh)
-    background.color = Color(the_color)
-    if the_color == "Grey":
-        background.db_color = diploe_grey
-    if the_color == "Yellow":
-        background.db_color = diploe_yellow
+    # background = cosmetic_box((0, 0), rw, rh)
+    # background.color = Color(the_color)
+    # if the_color == "Grey":
+    #     background.db_color = diploe_grey
+    # if the_color == "Yellow":
+    #     background.db_color = diploe_yellow
 
-    wall_offset = 25
-    left_wall  = static_box((0-wall_offset-wall_w,0), wall_w, rh)
-    right_wall = static_box((rw+wall_offset,0), wall_w, rh)
+    wall_offset = 10
+    left_wall  = static_box((0-wall_offset-wall_w,-1000,), wall_w, rh+1000)
+    right_wall = static_box((rw+wall_offset,-1000), wall_w, rh+1000)
 
     #### Floor or ceiling: (both use floorH:int)
     if y_limit == "floor":
         floor      = static_box((-rw*2, rh), rw*6, floor_h)    
     elif y_limit == "ceiling":
-        ceiling    = static_box((0, 0-rh), rw, floor_h)
-
-    #floor.color = floor_color
-    floor.category = cat1
+        ceiling    = static_box((-rw*2, 0-floor_h), rw*6, floor_h)
 
 
 
@@ -106,11 +103,12 @@ def makeRender(variations,the_color):
     the_font_size = 280
     text_color_name = "Black"
 
-    text_box_A = (50, -1000, rw, 2500)
+    text_box_A = (75, 2000, rw, 3100)
     #the_text_A = "To be rooted is perhaps the most important and least recognized need of the human soul. It is one of the hardest to define."# A human being has roots by virtue of his real, active and natural participation in the life of a community which preserves in living shape certain particular treasures of the past and certain particular expectations for the future. This participation is a natural one, in the sense that it is automatically brought about by place, conditions of birth, profession and social surroundings. Every human being needs to have multiple roots. It is necessary for him to draw wellnigh the whole of his moral, intellectual and spiritual life by way of the environment of which he forms a natural part."
-    the_text_A = "Money destroys human roots wherever it is able to penetrate, by turning desire for gain into the sole motive."#"It should draw nourishment from outside contributions only after having digested them"
+    #the_text_A = "Money destroys human roots wherever it is able to penetrate, by turning desire for gain into the sole motive."#"It should draw nourishment from outside contributions only after having digested them"
     #the_text_A = "It easily manages to outweigh all other motives because the effort it demands of the mind is so very much less."
-    the_text_A = the_text_A
+    the_text_A =  "A human being has roots by virtue of his real, active and natural participation in the life of a community which preserves in living shape certain particular treasures of the past and certain particular expectations for the future. This participation is a natural one, in the sense that it is automatically brought about by place, conditions of birth, profession and social surroundings. Every human being needs to have multiple roots. It is necessary for him to draw wellnigh the whole of his moral, intellectual and spiritual life by way of the environment of which he forms a natural part"
+
     fs_w_counter_A = add_counter_and_make_fs(the_text_A, the_font_path, the_font_size, font_variations=the_fontVariations_A, lineHeight=the_font_size*.8)
 
     fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=(-6,2),category=cat1,split_characters=True)
@@ -125,17 +123,17 @@ def makeRender(variations,the_color):
 
 wdth_list = [50]
 #wght_list = [200,300,400,500,600,700,900]
-wght_list = [700]
-slnt_list = [0]
+wght_list = [200]
+slnt_list = [-11]
 
-color_list = ["Yellow"]
+color_list = ["Grey","Yellow"]
 
 for the_color in color_list:
     for wght_value in wght_list:
         for wdth_value in wdth_list:
             for slnt_value in slnt_list:
                 variations = {"wdth":wdth_value,"wght":wght_value,"slnt":slnt_value}
-                title = f"VERTwithWallsYellow_wdth{wdth_value}_wght{wght_value}_slnt{slnt_value}"
+                title = f"VFloat-Walls_thin{the_color}_wdth{wdth_value}_wght{wght_value}_slnt{slnt_value}"
                 print(f"💕 {title}")
                 makeRender(variations,the_color)
 

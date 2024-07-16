@@ -70,14 +70,14 @@ def makeRender(variations,the_color):
     ####----------------------------------------
 
     #### Background
-    background = cosmetic_box((0, 0), rw, rh)
-    background.color = Color(the_color)
-    if the_color == "Grey":
-        background.db_color = diploe_grey
-    if the_color == "Yellow":
-        background.db_color = diploe_yellow
+    # background = cosmetic_box((0, 0), rw, rh)
+    # background.color = Color(the_color)
+    # if the_color == "Grey":
+    #     background.db_color = diploe_grey
+    # if the_color == "Yellow":
+    #     background.db_color = diploe_yellow
 
-    wall_offset = 1500
+    wall_offset = 10
     left_wall  = static_box((0-wall_offset-wall_w,-1000,), wall_w, rh+1000)
     right_wall = static_box((rw+wall_offset,-1000), wall_w, rh+1000)
 
@@ -103,9 +103,12 @@ def makeRender(variations,the_color):
     the_font_size = 280
     text_color_name = "Black"
 
-    text_box_A = (50, 2000, rw, 2000)
-    the_text_A = "To be rooted is perhaps the most important and least recognized need of the human soul. It is one of the hardest to define."# A human being has roots by virtue of his real, active and natural participation in the life of a community which preserves in living shape certain particular treasures of the past and certain particular expectations for the future. This participation is a natural one, in the sense that it is automatically brought about by place, conditions of birth, profession and social surroundings. Every human being needs to have multiple roots. It is necessary for him to draw wellnigh the whole of his moral, intellectual and spiritual life by way of the environment of which he forms a natural part."
-    the_text_A = the_text_A
+    text_box_A = (75, 2000, rw, 3100)
+    #the_text_A = "To be rooted is perhaps the most important and least recognized need of the human soul. It is one of the hardest to define."# A human being has roots by virtue of his real, active and natural participation in the life of a community which preserves in living shape certain particular treasures of the past and certain particular expectations for the future. This participation is a natural one, in the sense that it is automatically brought about by place, conditions of birth, profession and social surroundings. Every human being needs to have multiple roots. It is necessary for him to draw wellnigh the whole of his moral, intellectual and spiritual life by way of the environment of which he forms a natural part."
+    #the_text_A = "Money destroys human roots wherever it is able to penetrate, by turning desire for gain into the sole motive."#"It should draw nourishment from outside contributions only after having digested them"
+    #the_text_A = "It easily manages to outweigh all other motives because the effort it demands of the mind is so very much less."
+    the_text_A =  "A human being has roots by virtue of his real, active and natural participation in the life of a community which preserves in living shape certain particular treasures of the past and certain particular expectations for the future. This participation is a natural one, in the sense that it is automatically brought about by place, conditions of birth, profession and social surroundings. Every human being needs to have multiple roots. It is necessary for him to draw wellnigh the whole of his moral, intellectual and spiritual life by way of the environment of which he forms a natural part"
+
     fs_w_counter_A = add_counter_and_make_fs(the_text_A, the_font_path, the_font_size, font_variations=the_fontVariations_A, lineHeight=the_font_size*.8)
 
     fallingParagraph(fs_w_counter_A, text_box_A, text_color_name,the_font_path, the_font_size, font_variations=the_fontVariations_A,line_angle=(-6,2),category=cat1,split_characters=True)
@@ -118,10 +121,10 @@ def makeRender(variations,the_color):
 #                        ]
 
 
-wdth_list = [100,150,50]
+wdth_list = [50]
 #wght_list = [200,300,400,500,600,700,900]
-wght_list = [900,700,600,500,400,300,200]
-slnt_list = [0,-11]
+wght_list = [700]
+slnt_list = [-11]
 
 color_list = ["Grey","Yellow"]
 
@@ -130,7 +133,7 @@ for the_color in color_list:
         for wdth_value in wdth_list:
             for slnt_value in slnt_list:
                 variations = {"wdth":wdth_value,"wght":wght_value,"slnt":slnt_value}
-                title = f"VFloat-NOWalls{the_color}_wdth{wdth_value}_wght{wght_value}_slnt{slnt_value}"
+                title = f"VFloat-Walls{the_color}_wdth{wdth_value}_wght{wght_value}_slnt{slnt_value}"
                 print(f"💕 {title}")
                 makeRender(variations,the_color)
 
