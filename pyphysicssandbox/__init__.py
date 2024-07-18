@@ -82,7 +82,7 @@ class PhysCanvas:
                 simulation_render_time=2,
                 time_multiplier=1,
                 print_frame_count=True,
-                drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='/Users/Ro/Dropbox/*A/_Diploe/rev2/Vert/',#'~/Desktop/DiploeRenders/', 
+                drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='/Users/Ro/Dropbox/*A/_Diploe/rev2/Horiz/',#'~/Desktop/DiploeRenders/', 
                 #drawBot_on=True, drawBot_save_format='mp4', drawBot_saveFolder='~/Desktop/DiploeRenders/', 
                 verbose=True):
 
@@ -260,7 +260,7 @@ class PhysCanvas:
 
 ####CHANGE THIS TO INIT THE OBJECT IN EVERY SCRIPT; WITH APPROTIPTRIATE DIMENSIONS AND TITLE;
     #Will also need to change references inside objects, but we can update them to take the canvas, and therefore the canvas.space
-canvas = PhysCanvas("title", 1080, 1920)
+canvas = PhysCanvas("title", 2000, 1000)
 space  = canvas.space
 ####........................................
 

@@ -1,4 +1,4 @@
-box_stroke_on = True
+#box_stroke_on = True
 box_stroke_on = False
 import drawBot
 import pygame
@@ -25,8 +25,8 @@ class TextBox(Box):
         else:
             self.font_variations = None
 
-        #self.text_align='left'
-        self.text_align='center'
+        self.text_align='left'
+        #self.text_align='center'
 
         #👇🏼DONT care about the textSize cause it'll be a drawBot textBox, and if it doesn't fit, drawBot will handle
         #👇🏼.....write smth to handle better preview *LATER*

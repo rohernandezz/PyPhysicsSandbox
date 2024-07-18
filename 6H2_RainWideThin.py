@@ -162,7 +162,7 @@ the_font_size = 160
 #text_color_name_B = (218,219,238,255) #diploeGrey
 text_color_name_B = (230,228,102,255) #diploeYellow
 the_fontVariations_B ={"wdth":150,"wght":50,"slnt":0}
-rain_text = "Diplöe "
+rain_text = "Diploë "
 fs_w_counter_B = add_counter_and_make_fslocal(rain_text*300, the_font_path, the_font_size, font_variations=the_fontVariations_B, lineHeight=the_font_size)
 text_box_B = (-50, -3200, rw*1.5, 3800)
 

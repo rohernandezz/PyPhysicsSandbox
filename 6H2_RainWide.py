@@ -28,7 +28,7 @@ w,h = canvas.win_width, canvas.win_height
 #Gral physics settings:
 
 #----------------------
-canvas.gravity(-16,400)  ###👈🏼👈🏼GRAVITY:(x,y)
+canvas.gravity(-16,350)  ###👈🏼👈🏼GRAVITY:(x,y)
 canvas.resistance(.95) #sandbox default is .95
 gral_elasticity = .9   #sandbox default is .9
 gral_friction   = .6   #sandbox default is .6
@@ -158,11 +158,11 @@ def fallingParagraphlocal(fs_by_lines, text_box, color_name, font_path, font_siz
 ####------------------
 
 the_font_path = "fonts/VF/DiploeVF.ttf" 
-the_font_size = 160
+the_font_size = 155
 text_color_name_B = (218,219,238,255) #diploeGrey
 #text_color_name_B = (230,228,102,255) #diploeYellow
 the_fontVariations_B ={"wdth":150,"wght":700,"slnt":0}
-rain_text = "Diplöe "
+rain_text = "Diploë "
 fs_w_counter_B = add_counter_and_make_fslocal(rain_text*300, the_font_path, the_font_size, font_variations=the_fontVariations_B, lineHeight=the_font_size)
 text_box_B = (-50, -3200, rw*1.5, 3800)
 
