@@ -3,7 +3,7 @@ box_stroke_on = False
 import drawBot
 import pygame
 import pymunk
-import math
+from math import sin, pi
 
 from .box_shape import Box
 from .base_shape import BaseShape
@@ -25,7 +25,8 @@ class TextBox(Box):
         else:
             self.font_variations = None
 
-        self.text_align='left'
+        #self.text_align='left'
+        self.text_align='center'
 
         #👇🏼DONT care about the textSize cause it'll be a drawBot textBox, and if it doesn't fit, drawBot will handle
         #👇🏼.....write smth to handle better preview *LATER*
@@ -88,10 +89,35 @@ class TextBox(Box):
             this_label_fs.fontSize(self.font_size)
             ##### FONT VARIATIONS
             if self.font_variations:
-                #print(f'aaaaa___{self.font_variations}')
-                this_label_fs.fontVariations(**self.font_variations)    
-            #var_slnt_value = drawBot.remap(self.position.x, 0, render_width, 0, -11)
-            #var_wght_value = drawBot.remap(shifted_y, render_height, 0, 200, 600)
+
+                if self.font_variations == "Remap":
+                    print(f"🎃 🎃 REMAP 🎃 🎃 ")
+                    max_frames = canvas.simulation_render_time * canvas.frames_x_second
+                    loop_len = int(max_frames)
+                    nya = canvas.frame_count
+                    ############
+                    amp = 1.0  # Amplitude of the sine wave
+                    freq = 1.0  # Frequency of the sine wave
+                    phShift = 0  # Phase shift of the sine wave
+                    ############
+                    framePhase = canvas.frame_count/loop_len
+                    curvePhase = amp * (sin(freq * framePhase * 2 * pi) + phShift)
+                    
+                    print(f"curvePhase:{curvePhase}")
+                    weightForFrame = abs(drawBot.lerp(200,900,abs(curvePhase))    )
+                    print(f"weightForFrame:{weightForFrame}")
+                    #var_wght_value = drawBot.remap(nya, canvas.render_height, 0, 200, 600)
+                    
+
+
+                    #var_wght_value = drawBot.remap(shifted_y, canvas.render_height, 0, 200, 600)
+                    #var_wdth_value = drawBot.remap(shifted_y, canvas.render_height, 0, 200, 600)
+                    #var_slnt_value = drawBot.remap(self.position.x, 0, canvas.render_width, 0, -11)
+                    this_label_fs.fontVariations(wght=weightForFrame,wdth=66)
+
+                else:
+                    #print(f'aaaaa___{self.font_variations}')
+                    this_label_fs.fontVariations(**self.font_variations)
             
             #####///FONT VARIATIONS
             this_label_fs.lineHeight(self.font_size*0.95)
